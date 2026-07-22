@@ -21,6 +21,7 @@
     --ink: #3b2617;
     --ink-soft: #6e553d;
     --blood: #7a2417;
+    --header-h: 58px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -28,11 +29,12 @@
     user-select: none;
     -webkit-tap-highlight-color: transparent;
   }
-  html { background: #241711; }
+  html { background: #241711; scroll-padding-top: calc(var(--header-h) + 10px); }
   body {
     color: var(--ink);
     font-family: Georgia, "Times New Roman", serif;
     line-height: 1.55;
+    padding-top: var(--header-h);
     background:
       linear-gradient(rgba(18, 10, 5, .35), rgba(18, 10, 5, .35)),
       url("wood.jpg") #261811;
@@ -40,9 +42,63 @@
   }
   h1, h2, .lang-switch button, .counter, .contact-buttons a { font-family: "Monomakh", Georgia, serif; font-weight: normal; }
 
-  .board { max-width: 1180px; margin: 0 auto; padding: 16px 14px 40px; position: relative; }
+  /* ============ фиксированный хедер ============ */
+  .topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--header-h);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    background:
+      linear-gradient(rgba(15, 8, 4, .45), rgba(15, 8, 4, .45)),
+      url("wood.jpg") #2a1b10;
+    background-size: auto, 900px auto;
+    border-bottom: 1px solid #150b06;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .5);
+  }
+  .topbar .medallion {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    flex: none;
+    box-shadow: 0 0 0 2px rgba(236, 217, 179, .25);
+  }
+  .topbar h1 {
+    font-size: clamp(.95rem, 3.4vw, 1.35rem);
+    color: var(--parch);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
+  }
+  .lang-switch {
+    flex: none;
+    display: flex; gap: 3px;
+    background: rgba(0, 0, 0, .35);
+    border-radius: 999px;
+    padding: 3px;
+  }
+  .lang-switch button {
+    border: none; background: none;
+    color: #d8c39a;
+    font-size: .9rem;
+    padding: 3px 11px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .lang-switch button.active {
+    background: url("parchment.jpg") var(--parch);
+    background-size: 300px auto;
+    color: var(--ink);
+  }
 
-  /* пергаментные листы, прибитые к доске */
+  .board { max-width: 1180px; margin: 0 auto; padding: 18px 14px 40px; }
+
+  /* пергаментные листы */
   .sheet {
     position: relative;
     background:
@@ -63,49 +119,14 @@
     z-index: 3;
   }
 
-  /* шапка-лист */
-  .head-sheet { text-align: center; padding: 14px 18px 16px; margin-bottom: 22px; }
-  .medallion {
-    width: 74px; height: 74px;
-    border-radius: 50%;
-    display: block;
-    margin: 0 auto 2px;
-    mix-blend-mode: multiply;
-  }
-  h1 { font-size: clamp(1.4rem, 4.4vw, 2.2rem); }
-  .intro { color: var(--ink-soft); font-size: .98rem; max-width: 760px; margin: 6px auto 0; }
-  .lang-switch {
-    position: absolute;
-    top: 12px; right: 14px;
-    display: flex; gap: 4px;
-    background: linear-gradient(rgba(20, 10, 5, .4), rgba(20, 10, 5, .4)), url("wood.jpg") #3a2412;
-    background-size: auto, 300px auto;
-    border-radius: 999px;
-    padding: 3px;
-    z-index: 5;
-  }
-  .lang-switch button {
-    border: none; background: none;
-    color: #d8c39a;
-    font-size: .92rem;
-    padding: 3px 12px;
-    border-radius: 999px;
-    cursor: pointer;
-  }
-  .lang-switch button.active {
-    background: url("parchment.jpg") var(--parch);
-    background-size: 300px auto;
-    color: var(--ink);
-  }
-
-  /* три карточки */
+  /* ============ карточки ============ */
   .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
     gap: 26px;
     align-items: start;
   }
-  .card { padding: 12px 14px 18px; }
+  .card { padding: 12px 14px 16px; }
   .card:nth-child(1) { transform: rotate(-1.1deg); }
   .card:nth-child(2) { transform: rotate(.7deg); }
   .card:nth-child(3) { transform: rotate(-.5deg); }
@@ -117,7 +138,7 @@
   }
   .card .desc { font-size: .96rem; margin-top: 12px; }
 
-  /* мини-карусель карточки */
+  /* мини-карусель */
   .mini {
     position: relative;
     aspect-ratio: 3 / 4;
@@ -188,11 +209,33 @@
     border-radius: 999px;
   }
 
-  /* нижний лист: контакты и шеринг */
-  .foot-sheet { text-align: center; padding: 20px 18px 24px; margin-top: 26px; }
-  .foot-sheet p.note { color: var(--ink-soft); font-size: .95rem; margin-bottom: 12px; white-space: pre-line; }
+  /* шеринг на карточке */
+  .card-share {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 12px;
+  }
+  .card-share button {
+    width: 38px; height: 38px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    border: 1px solid #1d100a;
+    cursor: pointer;
+    color: #f2e3c2;
+    background: linear-gradient(rgba(20, 10, 5, .40), rgba(20, 10, 5, .32)), url("wood.jpg") #3a2412;
+    background-size: auto, 300px auto;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 220, 160, .14);
+    transition: transform .15s ease, filter .15s ease;
+  }
+  .card-share button:hover { transform: translateY(-2px); filter: brightness(1.15); }
+  .s-icon { width: 18px; height: 18px; display: block; flex: none; }
+
+  /* ============ нижний лист: история, контакты, шеринг ============ */
+  .foot-sheet { text-align: center; padding: 22px 20px 26px; margin-top: 28px; }
+  .foot-sheet .story { color: var(--ink); font-size: .99rem; max-width: 720px; margin: 0 auto 10px; }
+  .foot-sheet p.note { color: var(--ink-soft); font-size: .95rem; margin: 14px 0 12px; white-space: pre-line; }
   .contact-buttons { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-  .s-icon { width: 19px; height: 19px; display: block; flex: none; }
   .contact-buttons a {
     display: inline-flex; align-items: center; gap: 9px;
     padding: 11px 22px;
@@ -260,25 +303,23 @@
 </head>
 <body>
 
-<div class="board">
+<header class="topbar">
+  <img class="medallion" src="medallion.jpg" alt="">
+  <h1 data-i18n="title">Три сладких котобулочки ищут дом 🐾</h1>
   <div class="lang-switch" id="langSwitch">
     <button data-lang="ru">РУС</button>
     <button data-lang="sr">СРП</button>
   </div>
+</header>
 
-  <div class="sheet head-sheet">
-    <i class="nail" style="top:8px;left:10px"></i><i class="nail" style="top:8px;right:10px"></i>
-    <img class="medallion" src="medallion.jpg" alt="">
-    <h1 data-i18n="title">Три сладких котобулочки ищут дом 🐾</h1>
-    <p class="intro" data-i18n="about1"></p>
-    <p class="intro" data-i18n="about2"></p>
-  </div>
-
+<div class="board">
   <div class="cards" id="cards"></div>
 
   <div class="sheet foot-sheet">
     <i class="nail" style="top:8px;left:12px"></i><i class="nail" style="top:8px;right:12px"></i>
-    <p class="note" data-i18n="closing"></p>
+    <p class="story" data-i18n="about1"></p>
+    <p class="story" data-i18n="about2"></p>
+    <p class="story" data-i18n="closing"></p>
     <p class="note" data-i18n="contactsNote"></p>
     <div class="contact-buttons" id="contactButtons"></div>
     <p class="share-title" data-i18n="shareTitle"></p>
@@ -305,38 +346,38 @@ const MEDIA_DIR = "media";
 
 /* фото каждого котёнка */
 const KITTENS = [
-  { key: "k1", files: ["2026-07-22 17.24.28.jpg", "2026-07-22 17.24.59.jpg", "2026-07-22 17.25.05.jpg", "2026-07-22 17.28.10.jpg", "2026-07-22 17.28.17.jpg", "2026-07-22 17.28.23.jpg", "photo_2026-07-22 17.28.28.jpeg"] },
+  { key: "k1", files: ["2026-07-22 17.24.28.jpg", "2026-07-22 17.24.59.jpg", "2026-07-22 17.25.05.jpg", "2026-07-22 17.28.10.jpg", "2026-07-22 17.28.17.jpg", "2026-07-22 17.28.23.jpg", "photo_2026-07-22 17.28.28.jpeg", "photo_2026-07-22 17.28.47.jpeg", "photo_2026-07-22 17.28.48.jpeg", "photo_2026-07-22 17.28.49.jpeg", "photo_2026-07-22 17.28.52.jpeg", "photo_2026-07-22 17.29.03.jpeg", "photo_2026-07-22 17.29.04.jpeg", "photo_2026-07-22 17.29.05.jpeg", "photo_2026-07-22 17.29.07.jpeg", "photo_2026-07-22 17.29.08.jpeg"] },
   { key: "k2", files: ["photo_2026-07-22 17.28.33.jpeg", "photo_2026-07-22 17.28.35.jpeg", "photo_2026-07-22 17.28.36.jpeg", "photo_2026-07-22 17.28.38.jpeg", "photo_2026-07-22 17.28.39.jpeg", "photo_2026-07-22 17.28.41.jpeg", "photo_2026-07-22 17.28.42.jpeg", "photo_2026-07-22 17.28.43.jpeg", "photo_2026-07-22 17.28.44.jpeg", "photo_2026-07-22 17.28.45.jpeg", "photo_2026-07-22 17.28.46.jpeg", "photo_2026-07-22 17.28.58.jpeg", "photo_2026-07-22 17.28.59.jpeg"] },
-  { key: "k3", files: ["photo_2026-07-22 17.28.40.jpeg", "photo_2026-07-22 17.28.47.jpeg", "photo_2026-07-22 17.28.48.jpeg", "photo_2026-07-22 17.28.49.jpeg", "photo_2026-07-22 17.28.50.jpeg", "photo_2026-07-22 17.28.51.jpeg", "photo_2026-07-22 17.28.52.jpeg", "photo_2026-07-22 17.28.53.jpeg", "photo_2026-07-22 17.28.54.jpeg", "photo_2026-07-22 17.28.55.jpeg", "photo_2026-07-22 17.28.56.jpeg", "photo_2026-07-22 17.29.00.jpeg", "photo_2026-07-22 17.29.01.jpeg", "photo_2026-07-22 17.29.02.jpeg", "photo_2026-07-22 17.29.03.jpeg", "photo_2026-07-22 17.29.04.jpeg", "photo_2026-07-22 17.29.05.jpeg", "photo_2026-07-22 17.29.07.jpeg", "photo_2026-07-22 17.29.08.jpeg"] },
+  { key: "k3", files: ["photo_2026-07-22 17.28.40.jpeg", "photo_2026-07-22 17.28.50.jpeg", "photo_2026-07-22 17.28.51.jpeg", "photo_2026-07-22 17.28.53.jpeg", "photo_2026-07-22 17.28.54.jpeg", "photo_2026-07-22 17.28.55.jpeg", "photo_2026-07-22 17.28.56.jpeg", "photo_2026-07-22 17.29.00.jpeg", "photo_2026-07-22 17.29.01.jpeg", "photo_2026-07-22 17.29.02.jpeg"] },
 ];
 
 const I18N = {
   ru: {
     title: "Три сладких котобулочки ищут дом 🐾",
-    about1: "Были найдены под кустом в сербской деревне совсем крохами. Мы их отмыли, откормили, обработали от паразитов и привезли в Белград — быстро приучились к лотку.",
-    about2: "Сейчас им примерно 6–7 недель. Они ласковые, ручные, активные — изучают окружающий мир и проверяют его на прочность.",
+    about1: "Были найдены под кустом в сербской деревне совсем крохами. Мы их отмыли, откормили, обработали от паразитов и привезли в Белград — быстро приучились к лотку. Сейчас им примерно 6–7 недель: ласковые, ручные, активные.",
+    about2: "Котикам предстоит вакцинация, после которой они будут готовы к удомлению. Хочется найти им самых добрых и заботливых людей 🐱",
+    closing: "",
     k1title: "Крошка-кошка",
     k1text: "Самая маленькая и самая спокойная. Засыпает на руках. Первая догадалась, для чего нужен лоток. Умничка 🤍",
     k2title: "Кошка-блондинка",
     k2text: "Любознательная девочка с характером. Любит тыгыдыки, орать и кусать брата за ухо.",
     k3title: "Чёткий пацанчик",
     k3text: "Орал под кустом громче всех, защищает сестриц, бойкий и прыгучий. Настоящий мужик 😎",
-    closing: "Котикам предстоит вакцинация, после которой они будут готовы к удомлению. Хочется найти им самых добрых и заботливых людей 🐱",
     contactsNote: "Белград, можем привезти и в другие города.\nПишите или звоните — с радостью расскажем подробнее и покажем котят.",
     shareTitle: "Расскажи друзьям — вдруг их дом ждёт котёнка",
     shareText: "Три сладких котобулочки ищут дом 🐾 Белград, ~7 недель, ласковые и к лотку приучены.",
   },
   sr: {
     title: "Три слатке мачје земичке траже дом 🐾",
-    about1: "Нашли смо их испод жбуна у једном селу у Србији, сасвим мале. Окупали смо их, нахранили, очистили од паразита и довели у Београд — брзо су навикле на тоалет.",
-    about2: "Сада имају око 6–7 недеља. Мазне су, питоме и активне — истражују свет око себе и испробавају га на чврстину.",
+    about1: "Нашли смо их испод жбуна у једном селу у Србији, сасвим мале. Окупали смо их, нахранили, очистили од паразита и довели у Београд — брзо су навикле на тоалет. Сада имају око 6–7 недеља: мазне, питоме и активне.",
+    about2: "Мачиће ускоро чека вакцинација, после које ће бити спремни за удомљавање. Желимо да им нађемо најбоље људе 🐱",
+    closing: "",
     k1title: "Мала маца",
     k1text: "Најмања и најмирнија. Заспи у наручју. Прва је схватила чему служи тоалет. Паметница 🤍",
     k2title: "Маца плавуша",
     k2text: "Радознала девојчица са карактером. Воли јурњаву по стану, дерњаву и да гризе брата за уво.",
     k3title: "Прави мангуп",
     k3text: "Испод жбуна се драо најгласније, штити сестре, живахан и скакутав. Прави мушкарац 😎",
-    closing: "Мачиће ускоро чека вакцинација, после које ће бити спремни за удомљавање. Желимо да им нађемо најбоље људе 🐱",
     contactsNote: "Београд, можемо да их довеземо и у друге градове.\nПишите или позовите — радо ћемо испричати више и показати мачиће.",
     shareTitle: "Подели са пријатељима — можда њихов дом чека маче",
     shareText: "Три слатке мачје земичке траже дом 🐾 Београд, око 7 недеља, мазне и навикле на тоалет.",
@@ -355,13 +396,26 @@ function iconSvg(name) {
   return `<svg class="s-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="${ICONS[name]}"/></svg>`;
 }
 
+/* текст шеринга конкретного котёнка */
+function kittenShareText(key) {
+  return `${I18N[lang][key + "title"]} — ${I18N[lang][key + "text"]}\n${I18N[lang].shareText}`;
+}
+function shareLinks(text, anchor) {
+  const url = SHARE_URL + (anchor ? "#" + anchor : "");
+  return {
+    telegram: `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,
+    whatsapp: `https://wa.me/?text=${encodeURIComponent(text + "\n\n" + url)}`,
+    threads:  `https://www.threads.net/intent/post?text=${encodeURIComponent(text + "\n\n" + url)}`,
+  };
+}
+
 /* ============ карточки ============ */
 const cardsBox = document.getElementById("cards");
-const minis = []; // {track, counter, files}
 
 KITTENS.forEach((k, ki) => {
   const card = document.createElement("div");
   card.className = "sheet card";
+  card.id = k.key;
   card.innerHTML = `
     <i class="nail" style="top:7px;left:10px"></i><i class="nail" style="top:7px;right:10px"></i>
     <h2 data-i18n="${k.key}title"></h2>
@@ -371,7 +425,8 @@ KITTENS.forEach((k, ki) => {
       <button class="nav next">›</button>
       <div class="counter"></div>
     </div>
-    <p class="desc" data-i18n="${k.key}text"></p>`;
+    <p class="desc" data-i18n="${k.key}text"></p>
+    <div class="card-share"></div>`;
   cardsBox.appendChild(card);
 
   const track = card.querySelector(".track");
@@ -388,9 +443,7 @@ KITTENS.forEach((k, ki) => {
     slide.addEventListener("click", () => openLightbox(ki, i));
     track.appendChild(slide);
   });
-  const mini = { track, counter, files: k.files, current: 0 };
-  minis.push(mini);
-
+  const mini = { current: 0 };
   const update = () => { counter.textContent = `${mini.current + 1} / ${k.files.length}`; };
   update();
   track.addEventListener("scroll", () => {
@@ -404,6 +457,19 @@ KITTENS.forEach((k, ki) => {
   };
   card.querySelector(".prev").addEventListener("click", e => { e.stopPropagation(); go(-1); });
   card.querySelector(".next").addEventListener("click", e => { e.stopPropagation(); go(1); });
+
+  /* персональные кнопки шеринга */
+  const shareBox = card.querySelector(".card-share");
+  ["telegram", "whatsapp", "threads"].forEach(net => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.innerHTML = iconSvg(net);
+    b.setAttribute("aria-label", "Share");
+    b.addEventListener("click", () => {
+      window.open(shareLinks(kittenShareText(k.key), k.key)[net], "_blank", "noopener");
+    });
+    shareBox.appendChild(b);
+  });
 });
 
 /* ============ лайтбокс ============ */
@@ -442,7 +508,7 @@ document.addEventListener("keydown", e => {
   if (e.key === "ArrowRight") lbStep(1);
 });
 
-/* ============ контакты и шеринг ============ */
+/* ============ контакты и общий шеринг ============ */
 function renderContacts() {
   const box = document.getElementById("contactButtons");
   const add = (href, icon, label) => {
@@ -460,19 +526,18 @@ function renderContacts() {
 }
 function renderShare() {
   const box = document.getElementById("shareButtons");
-  const mk = (icon, label, fn) => {
+  const mk = (icon, label) => {
     const b = document.createElement("button");
     b.type = "button";
     b.innerHTML = iconSvg(icon) + " " + label;
-    b.addEventListener("click", fn);
+    b.addEventListener("click", () => {
+      window.open(shareLinks(I18N[lang].shareText, "")[icon], "_blank", "noopener");
+    });
     box.appendChild(b);
   };
-  mk("telegram", "Telegram", () =>
-    window.open(`https://t.me/share/url?url=${encodeURIComponent(SHARE_URL)}&text=${encodeURIComponent(I18N[lang].shareText)}`, "_blank", "noopener"));
-  mk("whatsapp", "WhatsApp", () =>
-    window.open(`https://wa.me/?text=${encodeURIComponent(I18N[lang].shareText + "\n\n" + SHARE_URL)}`, "_blank", "noopener"));
-  mk("threads", "Threads", () =>
-    window.open(`https://www.threads.net/intent/post?text=${encodeURIComponent(I18N[lang].shareText + "\n\n" + SHARE_URL)}`, "_blank", "noopener"));
+  mk("telegram", "Telegram");
+  mk("whatsapp", "WhatsApp");
+  mk("threads", "Threads");
 }
 
 /* ============ язык ============ */
