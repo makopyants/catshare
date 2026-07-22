@@ -648,11 +648,12 @@ document.querySelectorAll("#langSwitch button").forEach(b =>
 
 let savedLang = null;
 try { savedLang = localStorage.getItem("lang"); } catch (e) {}
-const browserSr = (navigator.languages || [navigator.language || ""]).some(l => /^(sr|hr|bs)/i.test(l));
+/* русская версия — только для браузеров с русским языком, всем остальным сербская */
+const browserRu = (navigator.languages || [navigator.language || ""]).some(l => /^ru/i.test(l));
 
 renderContacts();
 renderShare();
-setLang(savedLang || (browserSr ? "sr" : "ru"));
+setLang(savedLang || (browserRu ? "ru" : "sr"));
 function scrollToHashCard() {
   if (!/^#k[123]$/.test(location.hash)) return;
   const card = document.getElementById(location.hash.slice(1));
