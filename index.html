@@ -34,11 +34,11 @@
     color: var(--ink);
     font-family: Georgia, "Times New Roman", serif;
     line-height: 1.6;
+    /* настоящее дерево — текстура с постера (wood.jpg), слегка затемнена */
     background:
-      var(--noise),
-      repeating-linear-gradient(90deg, rgba(255, 255, 255, .025) 0 2px, transparent 2px 160px),
-      repeating-linear-gradient(90deg, #2b1b10 0 150px, #1f120b 150px 153px, #2e1e12 153px 300px),
-      #261811;
+      linear-gradient(rgba(18, 10, 5, .35), rgba(18, 10, 5, .35)),
+      url("wood.jpg") #261811;
+    background-size: auto, 1280px auto;
   }
   h1, h2, h3, .lang-switch button, .contact-buttons a, .counter {
     font-family: "Monomakh", Georgia, serif;
