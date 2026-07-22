@@ -7,15 +7,10 @@
 <meta property="og:title" content="Три сладких котобулочки ищут дом 🐾">
 <meta property="og:description" content="Белград. Ласковые, ручные, к лотку приучены. Можем привезти и в другие города.">
 <meta property="og:image" content="https://makopyants.github.io/catshare/og-cover.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
-  /* ============================================================
-     СТИЛЬ «ВЕДЬМАЧИЙ ПОСТЕР»: дерево, пергамент, устав
-     ============================================================ */
   @font-face {
     font-family: "Monomakh";
     src: url("fonts/monomakh.otf") format("opentype");
@@ -26,8 +21,7 @@
     --ink: #3b2617;
     --ink-soft: #6e553d;
     --blood: #7a2417;
-    --leather: #46280f;
-    --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.055 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+    --header-h: 86px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -35,75 +29,72 @@
     user-select: none;
     -webkit-tap-highlight-color: transparent;
   }
-  html { background: #241711; }
+  html { background: #241711; scroll-padding-top: calc(var(--header-h) + 10px); }
   body {
     color: var(--ink);
     font-family: Georgia, "Times New Roman", serif;
-    line-height: 1.6;
-    /* настоящее дерево — текстура с постера (wood.jpg), слегка затемнена */
+    line-height: 1.55;
+    padding-top: var(--header-h);
     background:
       linear-gradient(rgba(18, 10, 5, .35), rgba(18, 10, 5, .35)),
       url("wood.jpg") #261811;
     background-size: auto, 1280px auto;
   }
-  h1, h2, h3, .lang-switch button, .contact-buttons a, .counter {
-    font-family: "Monomakh", Georgia, serif;
-    font-weight: normal;
-  }
+  h1, h2, .lang-switch button, .counter, .contact-buttons a { font-family: "Monomakh", Georgia, serif; font-weight: normal; }
 
-  /* Пергаментный лист — настоящая текстура с постера */
-  .wrap {
-    max-width: 1080px;
-    margin: 20px auto 44px;
-    padding: 10px 18px 34px;
-    position: relative;
+  /* ============ фиксированный хедер ============ */
+  .topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--header-h);
+    z-index: 50;
     background:
-      radial-gradient(120% 100% at 50% 0%, rgba(255, 246, 220, .30) 0%, rgba(148, 102, 44, 0) 45%, rgba(96, 62, 22, .30) 100%),
-      url("parchment.jpg") #e6d0a6;
-    background-size: auto, 300px auto;
-    border-radius: 20px 14px 22px 12px;
-    box-shadow:
-      inset 0 0 90px rgba(96, 62, 22, .35),
-      inset 0 0 6px rgba(96, 62, 22, .3),
-      0 16px 50px rgba(0, 0, 0, .55);
+      linear-gradient(rgba(15, 8, 4, .45), rgba(15, 8, 4, .45)),
+      url("wood.jpg") #2a1b10;
+    background-size: auto, 900px auto;
+    border-bottom: 1px solid #150b06;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .5);
   }
-  @media (max-width: 700px) { .wrap { margin: 10px 8px 30px; } }
-
-  /* Гвозди по углам листа — маленькие, матовые */
-  .nail {
+  .topbar .medallion {
     position: absolute;
-    width: 13px; height: 13px;
+    left: 14px; top: 50%;
+    transform: translateY(-50%);
+    width: 66px; height: 66px;
     border-radius: 50%;
-    background: radial-gradient(circle at 38% 32%, #5d4a38 0%, #3a2b1e 45%, #241811 100%);
-    box-shadow:
-      2px 3px 4px rgba(59, 38, 23, .45),
-      inset 0 -1px 1px rgba(0, 0, 0, .4);
+    box-shadow: 0 0 0 2px rgba(236, 217, 179, .25);
   }
-  .nail.n1 { top: 14px; left: 16px; }
-  .nail.n2 { top: 14px; right: 16px; }
-  .nail.n3 { bottom: 14px; left: 22px; }
-  .nail.n4 { bottom: 14px; right: 22px; }
-
-  /* Переключатель языка */
+  .topbar h1 {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .3em;
+    padding: 0 118px;
+    font-size: clamp(1.15rem, 4.2vw, 2rem);
+    color: var(--parch);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .topbar h1 .title-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .paw { width: .95em; height: .95em; flex: none; }
   .lang-switch {
     position: absolute;
-    top: 16px; right: 60px;
-    z-index: 10;
-    display: flex; gap: 4px;
-    background:
-      linear-gradient(rgba(20, 10, 5, .40), rgba(20, 10, 5, .40)),
-      url("wood.jpg") #3a2412;
-    background-size: auto, 300px auto;
+    right: 12px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; gap: 3px;
+    background: rgba(0, 0, 0, .35);
     border-radius: 999px;
     padding: 3px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, .35);
   }
   .lang-switch button {
-    border: none;
-    background: none;
+    border: none; background: none;
     color: #d8c39a;
-    font-size: .95rem;
-    padding: 4px 13px;
+    font-size: .9rem;
+    padding: 3px 11px;
     border-radius: 999px;
     cursor: pointer;
   }
@@ -113,47 +104,63 @@
     color: var(--ink);
   }
 
-  /* Шапка */
-  header { text-align: center; padding: 14px 0 12px; }
-  @media (max-width: 700px) {
-    header { padding-top: 44px; } /* чтобы заголовок не залезал под переключатель языка */
+  .board { max-width: 1180px; margin: 0 auto; padding: 18px 14px 40px; }
+
+  /* пергаментные листы */
+  .sheet {
+    position: relative;
+    background:
+      radial-gradient(120% 100% at 50% 0%, rgba(255, 246, 220, .30) 0%, rgba(148, 102, 44, 0) 45%, rgba(96, 62, 22, .30) 100%),
+      url("parchment.jpg") #e6d0a6;
+    background-size: auto, 300px auto;
+    border-radius: 14px 10px 16px 9px;
+    box-shadow:
+      inset 0 0 60px rgba(96, 62, 22, .33),
+      0 12px 34px rgba(0, 0, 0, .5);
   }
-  .medallion {
-    width: 88px; height: 88px;
+  .nail {
+    position: absolute;
+    width: 12px; height: 12px;
     border-radius: 50%;
-    display: block;
-    margin: 0 auto 4px;
-    mix-blend-mode: multiply; /* пергамент медальона сливается с фоном листа */
-  }
-  header h1 {
-    font-size: clamp(1.5rem, 4.6vw, 2.4rem);
-    color: var(--ink);
-    letter-spacing: .01em;
-    text-shadow: 0 1px 0 rgba(255, 244, 214, .5);
+    background: radial-gradient(circle at 38% 32%, #5d4a38 0%, #3a2b1e 45%, #241811 100%);
+    box-shadow: 2px 3px 4px rgba(59, 38, 23, .45), inset 0 -1px 1px rgba(0, 0, 0, .4);
+    z-index: 3;
   }
 
-  /* ============ Карусель — портретная рама из настоящего дерева ============
-     Фото вертикальные, поэтому и рама 3:4: по высоте — до 74dvh,
-     на узких экранах упирается в ширину листа. */
-  .carousel {
+  /* ============ карточки ============ */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 26px;
+    align-items: start;
+  }
+  .card { padding: 12px 14px 16px; }
+  .card:nth-child(1) { transform: rotate(-1.1deg); }
+  .card:nth-child(2) { transform: rotate(.7deg); }
+  .card:nth-child(3) { transform: rotate(-.5deg); }
+  .card h2 {
+    text-align: center;
+    color: var(--blood);
+    font-size: 1.45rem;
+    margin: 4px 0 10px;
+  }
+  .card .desc { font-size: .96rem; margin-top: 12px; }
+
+  /* мини-карусель */
+  .mini {
     position: relative;
-    width: min(100%, calc(min(74vh, 780px) * 0.75));
     aspect-ratio: 3 / 4;
-    margin: 0 auto;
-    padding: 12px;
     border: 1px solid #150b06;
-    border-radius: 8px;
+    border-radius: 6px;
     overflow: hidden;
+    padding: 8px;
     background:
       linear-gradient(rgba(15, 8, 4, .30), rgba(15, 8, 4, .30)),
       url("wood.jpg") #2a1b10;
-    background-size: auto, 800px auto;
-    box-shadow: 0 10px 34px rgba(0, 0, 0, .45), inset 0 0 14px rgba(0, 0, 0, .55);
+    background-size: auto, 600px auto;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .4), inset 0 0 10px rgba(0, 0, 0, .5);
   }
-  @supports (height: 1dvh) {
-    .carousel { width: min(100%, calc(min(74dvh, 780px) * 0.75)); }
-  }
-  .track {
+  .mini .track {
     display: flex;
     height: 100%;
     background: #171310;
@@ -163,82 +170,116 @@
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
-  .track::-webkit-scrollbar { display: none; }
-  .slide {
+  .mini .track::-webkit-scrollbar { display: none; }
+  .mini .slide {
     flex: 0 0 100%;
     height: 100%;
     position: relative;
     overflow: hidden;
     scroll-snap-align: center;
     scroll-snap-stop: always;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     cursor: pointer;
   }
-  /* размытая подложка из того же кадра — вместо чёрных полей */
-  .slide img.bg {
-    position: absolute;
-    inset: -8%;
+  .mini .slide img.bg {
+    position: absolute; inset: -8%;
     width: 116%; height: 116%;
     object-fit: cover;
-    filter: blur(18px) brightness(.55) saturate(1.1);
+    filter: blur(16px) brightness(.55);
   }
-  .slide img.main, .slide video {
-    position: relative;
-    z-index: 1;
-    max-width: 100%;
-    max-height: 100%;
+  .mini .slide img.main {
+    position: relative; z-index: 1;
+    max-width: 100%; max-height: 100%;
     object-fit: contain;
-    display: block;
   }
-
-  .carousel .nav {
+  .mini .nav {
     position: absolute; top: 50%;
     transform: translateY(-50%);
     z-index: 5;
-    width: 44px; height: 44px;
+    width: 34px; height: 34px;
     border: 1px solid rgba(59, 38, 23, .6);
     border-radius: 50%;
     background: rgba(236, 217, 179, .82);
-    color: var(--ink); font-size: 1.6rem;
+    color: var(--ink); font-size: 1.25rem;
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    transition: background .15s ease;
   }
-  .carousel .nav:hover { background: var(--parch); }
-  .carousel .prev { left: 20px; }
-  .carousel .next { right: 20px; }
+  .mini .nav:hover { background: var(--parch); }
+  .mini .prev { left: 14px; }
+  .mini .next { right: 14px; }
   .counter {
-    position: absolute; top: 22px; right: 24px;
+    position: absolute; top: 14px; right: 16px;
     z-index: 5;
     background: rgba(34, 20, 9, .78);
     color: var(--parch);
-    font-size: .95rem;
-    padding: 3px 13px;
+    font-size: .85rem;
+    padding: 2px 10px;
     border-radius: 999px;
   }
-  /* Полоска прогресса автолистания */
-  .progress {
-    position: absolute; left: 12px; bottom: 12px;
-    z-index: 5;
-    height: 4px; width: 0%;
-    background: var(--blood);
-    transition: none;
-  }
-  .progress.running {
-    width: calc(100% - 24px);
-    transition: width linear;
-  }
-  .empty-note {
-    text-align: center;
-    color: var(--ink-soft);
-    padding: 60px 20px;
-    border: 2px dashed #8a6a4a;
-    border-radius: 10px;
-  }
 
-  /* Лайтбокс (полный размер + звук у видео) */
+  /* шеринг на карточке */
+  .card-share {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 12px;
+  }
+  .card-share button {
+    width: 38px; height: 38px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    border: 1px solid #1d100a;
+    cursor: pointer;
+    color: #f2e3c2;
+    background: linear-gradient(rgba(20, 10, 5, .40), rgba(20, 10, 5, .32)), url("wood.jpg") #3a2412;
+    background-size: auto, 300px auto;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 220, 160, .14);
+    transition: transform .15s ease, filter .15s ease;
+  }
+  .card-share button:hover { transform: translateY(-2px); filter: brightness(1.15); }
+  .s-icon { width: 18px; height: 18px; display: block; flex: none; }
+
+  /* ============ нижний лист: история, контакты, шеринг ============ */
+  .foot-sheet { text-align: center; padding: 22px 20px 26px; margin-top: 28px; }
+  .foot-sheet .story { color: var(--ink); font-size: .99rem; max-width: 720px; margin: 0 auto 10px; }
+  .foot-sheet p.note { color: var(--ink-soft); font-size: .95rem; margin: 14px 0 12px; white-space: pre-line; }
+  .contact-buttons { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .contact-buttons a {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 11px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.08rem;
+    color: #f2e3c2;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .65);
+    background: linear-gradient(rgba(20, 10, 5, .40), rgba(20, 10, 5, .32)), url("wood.jpg") #3a2412;
+    background-size: auto, 420px auto;
+    border: 1px solid #1d100a;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .4), inset 0 1px 0 rgba(255, 220, 160, .14);
+    transition: transform .15s ease, filter .15s ease;
+  }
+  .contact-buttons a:nth-child(2) { background-position: 0 0, -160px -40px; }
+  .contact-buttons a:nth-child(3) { background-position: 0 0, -320px -80px; }
+  .contact-buttons a:nth-child(4) { background-position: 0 0, -90px -120px; }
+  .contact-buttons a:hover { transform: translateY(-2px); filter: brightness(1.15); }
+  .share-title { color: var(--ink-soft); font-size: .93rem; margin: 18px 0 8px; }
+  .share-buttons { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; }
+  .share-buttons button {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: "Monomakh", Georgia, serif;
+    font-size: .98rem;
+    color: var(--ink);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    background: url("parchment.jpg") var(--parch);
+    background-size: 300px auto;
+    border: 2px solid #8a6a4a;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .25), inset 0 0 12px rgba(96, 62, 22, .15);
+  }
+  .share-buttons button:hover { transform: translateY(-2px); }
+
+  /* лайтбокс */
   .lightbox {
     position: fixed; inset: 0;
     background: rgba(20, 15, 10, .94);
@@ -248,218 +289,321 @@
     padding: 16px;
   }
   .lightbox.open { display: flex; }
-  .lightbox img, .lightbox video {
-    max-width: 96vw; max-height: 90vh;
-    border-radius: 10px;
-  }
+  .lightbox img, .lightbox video { max-width: 96vw; max-height: 90vh; border-radius: 10px; }
   .lightbox .close {
     position: absolute; top: 14px; right: 20px;
     font-size: 2.2rem; color: #fff;
     background: none; border: none; cursor: pointer;
-    line-height: 1;
-    z-index: 101;
+    line-height: 1; z-index: 101;
   }
-
-  /* Рассказ о котятах */
-  .about {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 8px 0 30px;
+  .lightbox .lnav {
+    position: absolute; top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.2rem; color: #fff;
+    background: rgba(255,255,255,.12);
+    border: none; cursor: pointer;
+    width: 50px; height: 50px;
+    border-radius: 50%;
   }
-  .about p { margin-bottom: 14px; font-size: 1.04rem; }
-  .kitten-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
-    margin: 20px 0;
-  }
-  .kitten-card {
-    background: rgba(255, 244, 214, .38);
-    border: 2px solid #8a6a4a;
-    border-radius: 8px;
-    box-shadow: inset 0 0 22px rgba(96, 62, 22, .16);
-    padding: 16px 15px;
-  }
-  .kitten-card h3 { color: var(--blood); margin-bottom: 6px; font-size: 1.3rem; }
-  .kitten-card p { margin: 0; font-size: .95rem; }
-
-  /* Контакты */
-  .contacts {
-    text-align: center;
-    padding: 16px 0 22px;
-  }
-  .contacts p.note { color: var(--ink-soft); font-size: .98rem; margin-bottom: 12px; white-space: pre-line; }
-  .contact-buttons {
-    display: flex; flex-wrap: wrap; gap: 10px;
-    justify-content: center;
-  }
-  .contact-buttons a {
-    display: inline-flex; align-items: center; gap: 9px;
-    padding: 12px 24px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 1.12rem;
-    letter-spacing: .02em;
-    color: #f2e3c2;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, .65);
-    background:
-      linear-gradient(rgba(20, 10, 5, .40), rgba(20, 10, 5, .32)),
-      url("wood.jpg") #3a2412;
-    background-size: auto, 420px auto;
-    border: 1px solid #1d100a;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, .4), inset 0 1px 0 rgba(255, 220, 160, .14);
-    transition: transform .15s ease, filter .15s ease;
-  }
-  /* у каждой кнопки свой кусок доски */
-  .contact-buttons a:nth-child(2) { background-position: 0 0, -160px -40px; }
-  .contact-buttons a:nth-child(3) { background-position: 0 0, -320px -80px; }
-  .contact-buttons a:nth-child(4) { background-position: 0 0, -90px -120px; }
-  .contact-buttons a:hover { transform: translateY(-2px); filter: brightness(1.15); }
-
-  /* Поделиться */
-  .share { text-align: center; padding: 0 0 30px; }
-  .share-title { color: var(--ink-soft); font-size: .95rem; margin-bottom: 10px; }
-  .share-buttons { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; }
-  .s-icon { width: 19px; height: 19px; display: block; flex: none; }
-  .share-buttons button {
-    display: inline-flex; align-items: center; gap: 9px;
-    font-family: "Monomakh", Georgia, serif;
-    font-size: 1.02rem;
-    color: var(--ink);
-    padding: 9px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    background: url("parchment.jpg") var(--parch);
-    background-size: 300px auto;
-    border: 2px solid #8a6a4a;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, .25), inset 0 0 14px rgba(96, 62, 22, .15);
-    transition: transform .15s ease, filter .15s ease;
-  }
-  .share-buttons button:hover { transform: translateY(-2px); filter: brightness(1.05); }
-
+  .lightbox .lprev { left: 14px; }
+  .lightbox .lnext { right: 14px; }
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <i class="nail n1"></i><i class="nail n2"></i><i class="nail n3"></i><i class="nail n4"></i>
+<header class="topbar">
+  <img class="medallion" src="medallion.jpg" alt="">
+  <h1 id="pageTitle"><span class="title-text">Три сладких котобулочки ищут дом</span></h1>
   <div class="lang-switch" id="langSwitch">
     <button data-lang="ru">РУС</button>
     <button data-lang="sr">СРП</button>
   </div>
-  <header>
-    <img class="medallion" src="medallion.jpg" alt="Медальон Школы Кота">
-    <h1 data-i18n="title">Три сладких котобулочки ищут дом 🐾</h1>
-  </header>
+</header>
 
-  <div class="carousel" id="carousel">
-    <div class="track" id="track"></div>
-    <button class="nav prev" aria-label="Назад">‹</button>
-    <button class="nav next" aria-label="Вперёд">›</button>
-    <div class="counter" id="counter"></div>
-    <div class="progress" id="progress"></div>
-  </div>
-  <div class="empty-note" id="emptyNote" hidden data-i18n="empty"></div>
+<div class="board">
+  <div class="cards" id="cards"></div>
 
-  <section class="contacts">
+  <div class="sheet foot-sheet">
+    <i class="nail" style="top:8px;left:12px"></i><i class="nail" style="top:8px;right:12px"></i>
+    <p class="story" data-i18n="about1"></p>
+    <p class="story" data-i18n="about2"></p>
+    <p class="story" data-i18n="closing"></p>
     <p class="note" data-i18n="contactsNote"></p>
     <div class="contact-buttons" id="contactButtons"></div>
-  </section>
-
-  <section class="share">
     <p class="share-title" data-i18n="shareTitle"></p>
-    <div class="share-buttons">
-      <button type="button" id="shareTg"><svg class="s-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Telegram</button>
-      <button type="button" id="shareWa"><svg class="s-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg> WhatsApp</button>
-      <button type="button" id="shareTh"><svg class="s-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32L7.734 7.847c.98-1.454 2.568-2.256 4.478-2.256h.044c3.194.02 5.097 1.975 5.287 5.388.108.046.216.094.321.142 1.49.7 2.58 1.761 3.154 3.07.797 1.82.871 4.79-1.548 7.158-1.85 1.81-4.094 2.628-7.277 2.65Zm1.003-11.69c-.242 0-.487.007-.739.021-1.836.103-2.98.946-2.916 2.143.067 1.256 1.452 1.839 2.784 1.767 1.224-.065 2.818-.543 3.086-3.71a10.5 10.5 0 0 0-2.215-.221z"/></svg> Threads</button>
-    </div>
-  </section>
-
-  <section class="about">
-    <p data-i18n="about1"></p>
-    <p data-i18n="about2"></p>
-
-    <div class="kitten-cards">
-      <div class="kitten-card">
-        <h3 data-i18n="k1title"></h3>
-        <p data-i18n="k1text"></p>
-      </div>
-      <div class="kitten-card">
-        <h3 data-i18n="k2title"></h3>
-        <p data-i18n="k2text"></p>
-      </div>
-      <div class="kitten-card">
-        <h3 data-i18n="k3title"></h3>
-        <p data-i18n="k3text"></p>
-      </div>
-    </div>
-
-    <p data-i18n="closing"></p>
-  </section>
+    <div class="share-buttons" id="shareButtons"></div>
+  </div>
 </div>
 
 <div class="lightbox" id="lightbox">
   <button class="close" aria-label="Закрыть">×</button>
+  <button class="lnav lprev">‹</button>
   <div id="lightboxContent"></div>
+  <button class="lnav lnext">›</button>
 </div>
 
 <script>
-/* ============================================================
-   КОНТАКТЫ — пустая строка "" отключает кнопку.
-   ============================================================ */
 const CONTACTS = {
-  telegram: "devthanatos",   // ник без @
-  phone:    "+381621928923", // для кнопки «позвонить»
-  whatsapp: "381621928923",  // номер без + и пробелов
-  viber:    "+381621928923", // номер с +
+  telegram: "devthanatos",
+  phone:    "+381621928923",
+  whatsapp: "381621928923",
+  viber:    "+381621928923",
 };
+const SHARE_URL = "https://makopyants.github.io/catshare/";
+const MEDIA_DIR = "media";
 
-/* Сколько секунд показывать фото до автолистания */
-const PHOTO_SECONDS = 4;
+/* Папки котят в media/. Список файлов подтягивается из GitHub API,
+   fallback — на случай недоступности API. */
+const KITTENS = [
+  { key: "k1", dir: "kroshka", fallback: ["2026-07-22 17.24.28.jpg", "2026-07-22 17.24.59.jpg", "2026-07-22 17.25.05.jpg", "2026-07-22 17.28.10.jpg", "2026-07-22 17.28.17.jpg", "2026-07-22 17.28.23.jpg", "photo_2026-07-22 17.28.28.jpeg", "photo_2026-07-22 17.28.47.jpeg", "photo_2026-07-22 17.28.48.jpeg", "photo_2026-07-22 17.28.49.jpeg", "photo_2026-07-22 17.28.52.jpeg", "photo_2026-07-22 17.29.03.jpeg", "photo_2026-07-22 17.29.04.jpeg", "photo_2026-07-22 17.29.05.jpeg", "photo_2026-07-22 17.29.07.jpeg", "photo_2026-07-22 17.29.08.jpeg"] },
+  { key: "k2", dir: "blondinka", fallback: ["photo_2026-07-22 17.28.33.jpeg", "photo_2026-07-22 17.28.35.jpeg", "photo_2026-07-22 17.28.36.jpeg", "photo_2026-07-22 17.28.38.jpeg", "photo_2026-07-22 17.28.39.jpeg", "photo_2026-07-22 17.28.41.jpeg", "photo_2026-07-22 17.28.42.jpeg", "photo_2026-07-22 17.28.43.jpeg", "photo_2026-07-22 17.28.44.jpeg", "photo_2026-07-22 17.28.45.jpeg", "photo_2026-07-22 17.28.46.jpeg", "photo_2026-07-22 17.28.58.jpeg", "photo_2026-07-22 17.28.59.jpeg"] },
+  { key: "k3", dir: "pacan", fallback: ["photo_2026-07-22 17.28.40.jpeg", "photo_2026-07-22 17.28.50.jpeg", "photo_2026-07-22 17.28.51.jpeg", "photo_2026-07-22 17.28.53.jpeg", "photo_2026-07-22 17.28.54.jpeg", "photo_2026-07-22 17.28.55.jpeg", "photo_2026-07-22 17.28.56.jpeg", "photo_2026-07-22 17.29.00.jpeg", "photo_2026-07-22 17.29.01.jpeg", "photo_2026-07-22 17.29.02.jpeg"] },
+];
+const OWNER = "makopyants", REPO = "catshare";
+const IMG_EXT = ["jpg", "jpeg", "png", "webp", "gif", "avif"];
+const VID_EXT = ["mp4", "webm", "m4v"];
+const ext = n => n.split(".").pop().toLowerCase();
+const isMedia = n => IMG_EXT.includes(ext(n)) || VID_EXT.includes(ext(n));
+const isVideo = n => VID_EXT.includes(ext(n));
 
-/* ============================================================
-   ТЕКСТЫ — русский и сербский
-   ============================================================ */
 const I18N = {
   ru: {
     title: "Три сладких котобулочки ищут дом 🐾",
-    about1: "Были найдены под кустом в сербской деревне совсем крохами, недель трёх от роду. Мы их подобрали, привезли в Белград, отмыли, откормили, обработали от паразитов. Быстро приучились к лотку.",
-    about2: "Сейчас им примерно 6–7 недель. Они ласковые, ручные, активные — изучают окружающий мир и проверяют его на прочность.",
+    about1: "Были найдены под кустом в сербской деревне совсем крохами. Мы их отмыли, откормили, обработали от паразитов и привезли в Белград — быстро приучились к лотку. Сейчас им примерно 6–7 недель: ласковые, ручные, активные.",
+    about2: "Котикам предстоит вакцинация, после которой они будут готовы к удомлению. Хочется найти им самых добрых и заботливых людей 🐱",
+    closing: "",
     k1title: "Крошка-кошка",
     k1text: "Самая маленькая и самая спокойная. Засыпает на руках. Первая догадалась, для чего нужен лоток. Умничка 🤍",
     k2title: "Кошка-блондинка",
     k2text: "Любознательная девочка с характером. Любит тыгыдыки, орать и кусать брата за ухо.",
     k3title: "Чёткий пацанчик",
     k3text: "Орал под кустом громче всех, защищает сестриц, бойкий и прыгучий. Настоящий мужик 😎",
-    closing: "Котикам предстоит вакцинация, после которой они будут готовы к удомлению. Хочется найти им самых добрых и заботливых людей. Они невероятно милые и тянутся к человеку 🐱",
     contactsNote: "Белград, можем привезти и в другие города.\nПишите или звоните — с радостью расскажем подробнее и покажем котят.",
-    empty: "Фотографии скоро появятся 🐱",
     shareTitle: "Расскажи друзьям — вдруг их дом ждёт котёнка",
     shareText: "Три сладких котобулочки ищут дом 🐾 Белград, ~7 недель, ласковые и к лотку приучены.",
   },
   sr: {
     title: "Три слатке мачје земичке траже дом 🐾",
-    about1: "Нашли смо их испод жбуна у једном селу у Србији, сасвим мале, око три недеље старе. Покупили смо их, довели у Београд, окупали, нахранили и очистили од паразита. Брзо су навикле на тоалет.",
-    about2: "Сада имају око 6–7 недеља. Мазне су, питоме и активне — истражују свет око себе и испробавају га на чврстину.",
+    about1: "Нашли смо их испод жбуна у једном селу у Србији, сасвим мале. Окупали смо их, нахранили, очистили од паразита и довели у Београд — брзо су навикле на тоалет. Сада имају око 6–7 недеља: мазне, питоме и активне.",
+    about2: "Мачиће ускоро чека вакцинација, после које ће бити спремни за удомљавање. Желимо да им нађемо најбоље људе 🐱",
+    closing: "",
     k1title: "Мала маца",
     k1text: "Најмања и најмирнија. Заспи у наручју. Прва је схватила чему служи тоалет. Паметница 🤍",
     k2title: "Маца плавуша",
     k2text: "Радознала девојчица са карактером. Воли јурњаву по стану, дерњаву и да гризе брата за уво.",
     k3title: "Прави мангуп",
     k3text: "Испод жбуна се драо најгласније, штити сестре, живахан и скакутав. Прави мушкарац 😎",
-    closing: "Мачиће ускоро чека вакцинација, после које ће бити спремни за удомљавање. Желимо да им нађемо најбоље и најбрижније људе. Невероватно су слатки и привржени човеку 🐱",
     contactsNote: "Београд, можемо да их довеземо и у друге градове.\nПишите или позовите — радо ћемо испричати више и показати мачиће.",
-    empty: "Фотографије стижу ускоро 🐱",
     shareTitle: "Подели са пријатељима — можда њихов дом чека маче",
     shareText: "Три слатке мачје земичке траже дом 🐾 Београд, око 7 недеља, мазне и навикле на тоалет.",
   },
 };
 let lang = "ru";
 
+const ICONS = {
+  telegram: "M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z",
+  whatsapp: "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z",
+  viber: "M11.4 0C9.473.028 5.333.344 3.02 2.467 1.302 4.187.696 6.7.633 9.817.57 12.933.488 18.776 6.12 20.36h.003l-.004 2.416s-.037.977.61 1.177c.777.242 1.234-.5 1.98-1.302.407-.44.972-1.084 1.397-1.58 3.85.324 6.812-.416 7.148-.526.776-.252 5.176-.816 5.892-6.657.74-6.02-.36-9.83-2.34-11.546-.596-.55-3.006-2.3-8.375-2.323 0 0-.395-.025-1.037-.017zm.058 1.693c.545-.004.88.017.88.017 4.542.02 6.717 1.388 7.222 1.846 1.675 1.435 2.53 4.868 1.906 9.897v.002c-.604 4.878-4.174 5.184-4.832 5.395-.28.09-2.882.737-6.153.524 0 0-2.436 2.94-3.197 3.704-.12.12-.26.167-.352.144-.13-.033-.166-.188-.165-.414l.02-4.018c-4.762-1.32-4.485-6.292-4.43-8.895.054-2.604.543-4.738 1.996-6.173 1.96-1.773 5.474-2.018 7.11-2.03zm.38 2.602c-.167 0-.303.135-.304.302 0 .167.133.303.3.305 1.624.01 2.946.537 4.028 1.592 1.073 1.046 1.62 2.468 1.633 4.334.002.167.14.3.307.3.166-.002.3-.138.3-.304-.014-1.984-.618-3.596-1.816-4.764-1.19-1.16-2.692-1.753-4.447-1.765zm-3.96.695c-.19-.032-.4.005-.616.117l-.01.002c-.43.247-.816.562-1.146.932-.002.004-.006.004-.008.008-.267.323-.42.638-.46.948-.008.046-.01.093-.007.14 0 .136.022.27.065.4l.013.01c.135.48.473 1.276 1.205 2.604.42.768.903 1.5 1.446 2.186.27.344.56.673.87.984l.132.132c.31.308.64.6.983.87.686.543 1.418 1.027 2.186 1.447 1.328.733 2.126 1.07 2.604 1.206l.01.014c.13.042.265.064.4.064.048.002.095 0 .142-.007.31-.036.626-.19.947-.46.004 0 .003-.002.008-.005.37-.33.683-.72.93-1.148l.002-.01c.225-.432.15-.842-.18-1.12-.004 0-.698-.58-1.037-.83-.36-.255-.73-.492-1.113-.71-.51-.285-1.032-.106-1.248.174l-.447.564c-.23.283-.657.246-.657.246-3.12-.796-3.955-3.955-3.955-3.955s-.037-.426.248-.656l.563-.448c.277-.215.456-.737.17-1.248-.217-.383-.454-.755-.71-1.113-.25-.34-.828-1.033-.83-1.037-.14-.165-.32-.267-.518-.3zm4.49.88c-.158.002-.29.124-.3.282-.01.167.115.31.282.322 1.208.088 2.104.485 2.722 1.155.622.674.925 1.512.902 2.573-.002.167.13.305.297.31.167.002.305-.13.31-.297.024-1.19-.327-2.203-1.06-2.997-.738-.8-1.795-1.253-3.126-1.35h-.024zm.463 1.63c-.16.002-.29.127-.3.286-.008.167.12.31.288.32.552.03.918.185 1.17.446.253.26.406.653.435 1.212.01.167.15.295.318.287.167-.01.295-.15.287-.317-.033-.663-.222-1.2-.6-1.59-.377-.39-.9-.593-1.573-.63h-.017z",
+  phone: "M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z",
+  threads: "M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32L7.734 7.847c.98-1.454 2.568-2.256 4.478-2.256h.044c3.194.02 5.097 1.975 5.287 5.388.108.046.216.094.321.142 1.49.7 2.58 1.761 3.154 3.07.797 1.82.871 4.79-1.548 7.158-1.85 1.81-4.094 2.628-7.277 2.65Zm1.003-11.69c-.242 0-.487.007-.739.021-1.836.103-2.98.946-2.916 2.143.067 1.256 1.452 1.839 2.784 1.767 1.224-.065 2.818-.543 3.086-3.71a10.5 10.5 0 0 0-2.215-.221z",
+};
+function iconSvg(name) {
+  return `<svg class="s-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="${ICONS[name]}"/></svg>`;
+}
+/* лапка в цвет темы вместо эмодзи 🐾 */
+const PAW = `<svg class="paw" viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor">
+  <ellipse cx="12" cy="16.6" rx="4.5" ry="3.5"/>
+  <ellipse cx="4.9" cy="10.8" rx="2" ry="2.6" transform="rotate(-18 4.9 10.8)"/>
+  <ellipse cx="9.4" cy="7.3" rx="2" ry="2.7" transform="rotate(-6 9.4 7.3)"/>
+  <ellipse cx="14.6" cy="7.3" rx="2" ry="2.7" transform="rotate(6 14.6 7.3)"/>
+  <ellipse cx="19.1" cy="10.8" rx="2" ry="2.6" transform="rotate(18 19.1 10.8)"/>
+</g></svg>`;
+
+/* текст шеринга конкретного котёнка */
+function kittenShareText(key) {
+  return `${I18N[lang][key + "title"]} — ${I18N[lang][key + "text"]}\n${I18N[lang].shareText}`;
+}
+function shareLinks(text, anchor) {
+  const url = SHARE_URL + (anchor ? "#" + anchor : "");
+  return {
+    telegram: `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,
+    whatsapp: `https://wa.me/?text=${encodeURIComponent(text + "\n\n" + url)}`,
+    threads:  `https://www.threads.net/intent/post?text=${encodeURIComponent(text + "\n\n" + url)}`,
+  };
+}
+
+/* ============ карточки ============ */
+const cardsBox = document.getElementById("cards");
+const filesByKitten = [];
+
+async function loadFileLists() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/git/trees/main?recursive=1`);
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    const byDir = {};
+    for (const t of data.tree || []) {
+      const m = t.path.match(/^media\/([^/]+)\/(.+)$/);
+      if (m && t.type === "blob" && isMedia(m[2])) (byDir[m[1]] = byDir[m[1]] || []).push(m[2]);
+    }
+    return byDir;
+  } catch (e) { return null; }
+}
+
+function buildCards(byDir) {
+  KITTENS.forEach((k, ki) => {
+    let files = (byDir && byDir[k.dir] && byDir[k.dir].length ? byDir[k.dir] : k.fallback).slice();
+    files.sort((a, b) => {
+      const av = isVideo(a), bv = isVideo(b);
+      if (av !== bv) return av - bv;
+      return a.localeCompare(b, undefined, { numeric: true });
+    });
+    filesByKitten.push(files);
+
+    const card = document.createElement("div");
+    card.className = "sheet card";
+    card.id = k.key;
+    card.innerHTML = `
+      <i class="nail" style="top:7px;left:10px"></i><i class="nail" style="top:7px;right:10px"></i>
+      <h2 data-i18n="${k.key}title"></h2>
+      <div class="mini">
+        <div class="track"></div>
+        <button class="nav prev">‹</button>
+        <button class="nav next">›</button>
+        <div class="counter"></div>
+      </div>
+      <p class="desc" data-i18n="${k.key}text"></p>
+      <div class="card-share"></div>`;
+    cardsBox.appendChild(card);
+
+    const track = card.querySelector(".track");
+    const counter = card.querySelector(".counter");
+    files.forEach((name, i) => {
+      const slide = document.createElement("div");
+      slide.className = "slide";
+      const src = `${MEDIA_DIR}/${k.dir}/${encodeURIComponent(name)}`;
+      if (isVideo(name)) {
+        const v = document.createElement("video");
+        v.src = src; v.className = "main";
+        v.preload = "metadata"; v.muted = true; v.playsInline = true;
+        slide.appendChild(v);
+      } else {
+        const bg = document.createElement("img");
+        bg.src = src; bg.className = "bg"; bg.loading = "lazy"; bg.setAttribute("aria-hidden", "true");
+        const img = document.createElement("img");
+        img.src = src; img.className = "main"; img.loading = i === 0 ? "eager" : "lazy"; img.alt = "";
+        slide.append(bg, img);
+      }
+      slide.addEventListener("click", () => openLightbox(ki, i));
+      track.appendChild(slide);
+    });
+    const mini = { current: 0 };
+    const update = () => { counter.textContent = `${mini.current + 1} / ${files.length}`; };
+    update();
+    track.addEventListener("scroll", () => {
+      const i = Math.round(track.scrollLeft / track.clientWidth);
+      if (i !== mini.current && i >= 0 && i < files.length) { mini.current = i; update(); }
+    }, { passive: true });
+    const go = d => {
+      mini.current = (mini.current + d + files.length) % files.length;
+      track.scrollTo({ left: mini.current * track.clientWidth, behavior: "smooth" });
+      update();
+    };
+    card.querySelector(".prev").addEventListener("click", e => { e.stopPropagation(); go(-1); });
+    card.querySelector(".next").addEventListener("click", e => { e.stopPropagation(); go(1); });
+
+    const shareBox = card.querySelector(".card-share");
+    ["telegram", "whatsapp", "threads"].forEach(net => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.innerHTML = iconSvg(net);
+      b.setAttribute("aria-label", "Share");
+      b.addEventListener("click", () => {
+        window.open(shareLinks(kittenShareText(k.key), k.key)[net], "_blank", "noopener");
+      });
+      shareBox.appendChild(b);
+    });
+  });
+}
+
+/* ============ лайтбокс ============ */
+const lightbox = document.getElementById("lightbox");
+const lightboxContent = document.getElementById("lightboxContent");
+let lbKitten = 0, lbIndex = 0;
+
+function openLightbox(ki, i) {
+  lbKitten = ki; lbIndex = i;
+  renderLb();
+  lightbox.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function renderLb() {
+  const name = filesByKitten[lbKitten][lbIndex];
+  const src = `${MEDIA_DIR}/${KITTENS[lbKitten].dir}/${encodeURIComponent(name)}`;
+  lightboxContent.innerHTML = isVideo(name)
+    ? `<video src="${src}" controls autoplay playsinline></video>`
+    : `<img src="${src}">`;
+}
+function closeLb() {
+  lightbox.classList.remove("open");
+  lightboxContent.innerHTML = "";
+  document.body.style.overflow = "";
+}
+function lbStep(d) {
+  const n = filesByKitten[lbKitten].length;
+  lbIndex = (lbIndex + d + n) % n;
+  renderLb();
+}
+lightbox.querySelector(".close").addEventListener("click", closeLb);
+lightbox.querySelector(".lprev").addEventListener("click", e => { e.stopPropagation(); lbStep(-1); });
+lightbox.querySelector(".lnext").addEventListener("click", e => { e.stopPropagation(); lbStep(1); });
+lightbox.addEventListener("click", e => { if (e.target === lightbox) closeLb(); });
+document.addEventListener("keydown", e => {
+  if (!lightbox.classList.contains("open")) return;
+  if (e.key === "Escape") closeLb();
+  if (e.key === "ArrowLeft") lbStep(-1);
+  if (e.key === "ArrowRight") lbStep(1);
+});
+
+/* ============ контакты и общий шеринг ============ */
+function renderContacts() {
+  const box = document.getElementById("contactButtons");
+  const add = (href, icon, label) => {
+    const a = document.createElement("a");
+    a.href = href;
+    a.innerHTML = iconSvg(icon) + " " + label;
+    a.target = "_blank";
+    a.rel = "noopener";
+    box.appendChild(a);
+  };
+  add(`https://t.me/${CONTACTS.telegram}`, "telegram", "Telegram");
+  add(`https://wa.me/${CONTACTS.whatsapp}`, "whatsapp", "WhatsApp");
+  add(`viber://chat?number=${encodeURIComponent(CONTACTS.viber)}`, "viber", "Viber");
+  add(`tel:${CONTACTS.phone}`, "phone", CONTACTS.phone.replace(/(\+381)(\d{2})(\d{4})(\d{3})/, "$1 $2 $3 $4"));
+}
+function renderShare() {
+  const box = document.getElementById("shareButtons");
+  const mk = (icon, label) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.innerHTML = iconSvg(icon) + " " + label;
+    b.addEventListener("click", () => {
+      window.open(shareLinks(I18N[lang].shareText, "")[icon], "_blank", "noopener");
+    });
+    box.appendChild(b);
+  };
+  mk("telegram", "Telegram");
+  mk("whatsapp", "WhatsApp");
+  mk("threads", "Threads");
+}
+
+/* ============ язык ============ */
 function setLang(l) {
   lang = l;
   document.documentElement.lang = lang;
   document.title = I18N[lang].title;
+  document.getElementById("pageTitle").innerHTML =
+    `<span class="title-text">${I18N[lang].title.replace("🐾", "").trim()}</span>${PAW}`;
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const t = I18N[lang][el.dataset.i18n];
     if (t !== undefined) el.textContent = t;
@@ -468,252 +612,20 @@ function setLang(l) {
     b.classList.toggle("active", b.dataset.lang === lang));
   try { localStorage.setItem("lang", lang); } catch (e) {}
 }
-
 document.querySelectorAll("#langSwitch button").forEach(b =>
   b.addEventListener("click", () => setLang(b.dataset.lang)));
 
 let savedLang = null;
 try { savedLang = localStorage.getItem("lang"); } catch (e) {}
 const browserSr = (navigator.languages || [navigator.language || ""]).some(l => /^(sr|hr|bs)/i.test(l));
-setLang(savedLang || (browserSr ? "sr" : "ru"));
 
-/* Репозиторий, из которого страница берёт список фото/видео. */
-const OWNER = "makopyants";
-const REPO  = "catshare";
-const MEDIA_DIR = "media";
-
-const IMG_EXT = ["jpg", "jpeg", "png", "webp", "gif", "avif"];
-const VID_EXT = ["mp4", "webm", "mov", "m4v"];
-
-const track = document.getElementById("track");
-const carousel = document.getElementById("carousel");
-const counter = document.getElementById("counter");
-const progress = document.getElementById("progress");
-let mediaItems = [];
-let current = 0;
-let advanceTimer = null;
-let paused = false; // true, пока открыт лайтбокс
-
-function ext(name) { return name.split(".").pop().toLowerCase(); }
-
-async function loadCarousel() {
-  let files = [];
-  try {
-    const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${MEDIA_DIR}`);
-    if (res.ok) {
-      const data = await res.json();
-      files = data
-        .filter(f => f.type === "file")
-        .map(f => f.name)
-        .filter(n => IMG_EXT.includes(ext(n)) || VID_EXT.includes(ext(n)));
-    }
-  } catch (e) { /* нет сети — покажем заглушку */ }
-
-  files.sort((a, b) => {
-    const av = VID_EXT.includes(ext(a)), bv = VID_EXT.includes(ext(b));
-    if (av !== bv) return av - bv;
-    return a.localeCompare(b, undefined, { numeric: true });
-  });
-
-  if (!files.length) {
-    carousel.hidden = true;
-    document.getElementById("emptyNote").hidden = false;
-    return;
-  }
-
-  mediaItems = files.map(name => ({
-    name,
-    src: `${MEDIA_DIR}/${encodeURIComponent(name)}`,
-    isVideo: VID_EXT.includes(ext(name)),
-  }));
-
-  mediaItems.forEach((item, i) => {
-    const slide = document.createElement("div");
-    slide.className = "slide";
-    slide.dataset.index = i;
-    if (item.isVideo) {
-      const v = document.createElement("video");
-      v.src = item.src;
-      v.preload = "metadata";
-      v.muted = true;
-      v.playsInline = true;
-      v.addEventListener("ended", () => {
-        if (Number(slide.dataset.index) === current && !paused) next();
-      });
-      slide.appendChild(v);
-    } else {
-      const bg = document.createElement("img");
-      bg.src = item.src;
-      bg.className = "bg";
-      bg.loading = i < 2 ? "eager" : "lazy";
-      bg.setAttribute("aria-hidden", "true");
-      slide.appendChild(bg);
-      const img = document.createElement("img");
-      img.src = item.src;
-      img.className = "main";
-      img.loading = i < 2 ? "eager" : "lazy";
-      img.alt = "Котёнок";
-      slide.appendChild(img);
-    }
-    slide.addEventListener("click", () => openLightbox(Number(slide.dataset.index)));
-    track.appendChild(slide);
-  });
-
-  /* Какой слайд сейчас в кадре — работает и для свайпов, и для стрелок */
-  const observer = new IntersectionObserver(entries => {
-    for (const e of entries) {
-      if (e.isIntersecting) activate(Number(e.target.dataset.index));
-    }
-  }, { root: track, threshold: 0.6 });
-  track.querySelectorAll(".slide").forEach(s => observer.observe(s));
-
-  activate(0);
-}
-
-function activate(i) {
-  if (i === current && advanceTimer) return;
-  current = i;
-  counter.textContent = `${i + 1} / ${mediaItems.length}`;
-
-  clearTimeout(advanceTimer);
-  advanceTimer = null;
-  resetProgress();
-
-  track.querySelectorAll("video").forEach(v => {
-    if (Number(v.parentElement.dataset.index) !== i) { v.pause(); v.currentTime = 0; }
-  });
-
-  if (paused) return;
-
-  const item = mediaItems[i];
-  if (item.isVideo) {
-    const v = track.children[i].querySelector("video");
-    v.muted = true; // страховка: автоплей разрешён только без звука
-    const p = v.play();
-    if (p) p.then(() => runProgress(v.duration || 15))
-           .catch(() => { advanceTimer = setTimeout(next, PHOTO_SECONDS * 1000); runProgress(PHOTO_SECONDS); });
-    else runProgress(v.duration || 15);
-  } else {
-    advanceTimer = setTimeout(next, PHOTO_SECONDS * 1000);
-    runProgress(PHOTO_SECONDS);
-  }
-}
-
-function goTo(i) {
-  const n = mediaItems.length;
-  const target = (i + n) % n;
-  track.scrollTo({ left: target * track.clientWidth, behavior: "smooth" });
-}
-function next() { goTo(current + 1); }
-function prev() { goTo(current - 1); }
-
-function runProgress(seconds) {
-  progress.classList.remove("running");
-  progress.style.transitionDuration = "0s";
-  progress.style.width = "0%";
-  void progress.offsetWidth; // перезапуск CSS-перехода
-  progress.style.transitionDuration = `${seconds}s`;
-  progress.classList.add("running");
-}
-function resetProgress() {
-  progress.classList.remove("running");
-  progress.style.transitionDuration = "0s";
-  progress.style.width = "0%";
-}
-
-carousel.querySelector(".next").addEventListener("click", e => { e.stopPropagation(); next(); });
-carousel.querySelector(".prev").addEventListener("click", e => { e.stopPropagation(); prev(); });
-document.addEventListener("keydown", e => {
-  if (lightbox.classList.contains("open")) {
-    if (e.key === "Escape") closeLightbox();
-    return;
-  }
-  if (e.key === "ArrowLeft") prev();
-  if (e.key === "ArrowRight") next();
-});
-/* При повороте телефона пересчитываем позицию скролла */
-window.addEventListener("resize", () => {
-  track.scrollTo({ left: current * track.clientWidth });
-});
-
-/* ============ Лайтбокс: полный размер, у видео — звук ============ */
-const lightbox = document.getElementById("lightbox");
-const lightboxContent = document.getElementById("lightboxContent");
-
-function openLightbox(i) {
-  paused = true;
-  clearTimeout(advanceTimer);
-  resetProgress();
-  track.querySelectorAll("video").forEach(v => v.pause());
-
-  const item = mediaItems[i];
-  lightboxContent.innerHTML = "";
-  if (item.isVideo) {
-    const v = document.createElement("video");
-    v.src = item.src;
-    v.controls = true;
-    v.autoplay = true;
-    v.playsInline = true;
-    lightboxContent.appendChild(v);
-  } else {
-    const img = document.createElement("img");
-    img.src = item.src;
-    lightboxContent.appendChild(img);
-  }
-  lightbox.classList.add("open");
-  document.body.style.overflow = "hidden";
-}
-function closeLightbox() {
-  lightbox.classList.remove("open");
-  lightboxContent.innerHTML = "";
-  document.body.style.overflow = "";
-  paused = false;
-  activate(current);
-}
-lightbox.querySelector(".close").addEventListener("click", closeLightbox);
-lightbox.addEventListener("click", e => { if (e.target === lightbox) closeLightbox(); });
-
-/* ============ Кнопки контактов ============ */
-const ICONS = {
-  telegram: "M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z",
-  whatsapp: "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z",
-  viber: "M11.4 0C9.473.028 5.333.344 3.02 2.467 1.302 4.187.696 6.7.633 9.817.57 12.933.488 18.776 6.12 20.36h.003l-.004 2.416s-.037.977.61 1.177c.777.242 1.234-.5 1.98-1.302.407-.44.972-1.084 1.397-1.58 3.85.326 6.812-.416 7.15-.525.776-.252 5.176-.816 5.892-6.657.74-6.02-.36-9.83-2.34-11.546-.596-.55-3.006-2.3-8.375-2.323 0 0-.395-.025-1.037-.017zm.058 1.693c.545-.004.88.017.88.017 4.542.02 6.717 1.388 7.222 1.846 1.675 1.435 2.53 4.868 1.906 9.897v.002c-.604 4.878-4.174 5.184-4.832 5.395-.28.09-2.882.737-6.153.524 0 0-2.436 2.94-3.197 3.704-.12.12-.26.167-.352.144-.13-.033-.166-.188-.165-.414l.02-4.018c-4.762-1.32-4.485-6.292-4.43-8.895.054-2.604.543-4.738 1.996-6.173 1.96-1.773 5.474-2.018 7.11-2.03zm.38 2.602c-.167 0-.303.135-.304.302 0 .167.133.303.3.305 1.624.01 2.946.537 4.028 1.592 1.073 1.046 1.62 2.468 1.633 4.334.002.167.14.3.307.3.166-.002.3-.138.3-.304-.014-1.984-.618-3.596-1.816-4.764-1.19-1.16-2.692-1.753-4.447-1.765zm-3.96.695c-.19-.032-.4.005-.616.117l-.01.002c-.43.247-.816.562-1.146.932-.002.004-.006.004-.008.008-.267.323-.42.638-.46.948-.008.046-.01.093-.007.14 0 .136.022.27.065.4l.013.01c.135.48.473 1.276 1.205 2.604.42.768.903 1.5 1.446 2.186.27.344.56.673.87.984l.132.132c.31.308.64.6.984.87.686.543 1.418 1.027 2.186 1.447 1.328.733 2.126 1.07 2.604 1.206l.01.014c.13.042.265.064.402.063.046.002.092 0 .138-.008.31-.036.627-.19.948-.46.004 0 .003-.002.008-.005.37-.33.683-.72.93-1.148l.003-.01c.225-.432.15-.842-.18-1.12-.004 0-.698-.58-1.037-.83-.36-.255-.73-.492-1.113-.71-.51-.285-1.032-.106-1.248.174l-.447.564c-.23.283-.657.246-.657.246-3.12-.796-3.955-3.955-3.955-3.955s-.037-.426.248-.656l.563-.448c.277-.215.456-.737.17-1.248-.217-.383-.454-.756-.71-1.115-.25-.34-.826-1.033-.83-1.035-.137-.165-.31-.265-.502-.297zm4.49.88c-.158.002-.29.124-.3.282-.01.167.115.312.282.324 1.16.085 2.017.466 2.645 1.15.63.688.93 1.524.906 2.57-.002.168.13.306.3.31.166.003.305-.13.31-.297.025-1.175-.334-2.193-1.067-2.994-.74-.81-1.777-1.253-3.05-1.346h-.024zm.463 1.63c-.16.002-.29.127-.3.287-.008.167.12.31.288.32.523.028.875.175 1.113.422.24.245.388.62.416 1.164.01.167.15.295.318.287.167-.008.295-.15.287-.317-.03-.644-.215-1.178-.58-1.557-.367-.378-.893-.574-1.52-.607h-.018z",
-  phone: "M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"
-};
-function iconSvg(name) {
-  return `<svg class="s-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="${ICONS[name]}"/></svg>`;
-}
-function renderContacts() {
-  const box = document.getElementById("contactButtons");
-  const add = (href, cls, icon, label) => {
-    const a = document.createElement("a");
-    a.href = href;
-    a.className = cls;
-    a.innerHTML = iconSvg(icon) + " " + label;
-    a.target = "_blank";
-    a.rel = "noopener";
-    box.appendChild(a);
-  };
-  if (CONTACTS.telegram) add(`https://t.me/${CONTACTS.telegram}`, "btn-tg", "telegram", "Telegram");
-  if (CONTACTS.whatsapp) add(`https://wa.me/${CONTACTS.whatsapp}`, "btn-wa", "whatsapp", "WhatsApp");
-  if (CONTACTS.viber)    add(`viber://chat?number=${encodeURIComponent(CONTACTS.viber)}`, "btn-viber", "viber", "Viber");
-  if (CONTACTS.phone)    add(`tel:${CONTACTS.phone}`, "btn-phone", "phone", CONTACTS.phone.replace(/(\+381)(\d{2})(\d{4})(\d{3})/, "$1 $2 $3 $4"));
-}
-
-/* ============ Кнопки «поделиться» ============ */
-const SHARE_URL = "https://makopyants.github.io/catshare/";
-document.getElementById("shareTg").addEventListener("click", () => {
-  window.open(`https://t.me/share/url?url=${encodeURIComponent(SHARE_URL)}&text=${encodeURIComponent(I18N[lang].shareText)}`, "_blank", "noopener");
-});
-document.getElementById("shareWa").addEventListener("click", () => {
-  window.open(`https://wa.me/?text=${encodeURIComponent(I18N[lang].shareText + "\n\n" + SHARE_URL)}`, "_blank", "noopener");
-});
-document.getElementById("shareTh").addEventListener("click", () => {
-  window.open(`https://www.threads.net/intent/post?text=${encodeURIComponent(I18N[lang].shareText + "\n\n" + SHARE_URL)}`, "_blank", "noopener");
-});
-
-loadCarousel();
 renderContacts();
+renderShare();
+setLang(savedLang || (browserSr ? "sr" : "ru"));
+loadFileLists().then(byDir => {
+  buildCards(byDir);
+  setLang(lang); /* проставить тексты в свежесозданных карточках */
+});
 </script>
 </body>
 </html>
