@@ -170,6 +170,12 @@
     margin: 4px 0 10px;
   }
   .card .desc { font-size: .96rem; margin-top: 12px; }
+  /* подсветка карточки при переходе по якорной ссылке */
+  @keyframes cardFlash {
+    0%, 100% { box-shadow: inset 0 0 60px rgba(96, 62, 22, .33), 0 12px 34px rgba(0, 0, 0, .5); }
+    30%, 60% { box-shadow: inset 0 0 60px rgba(96, 62, 22, .33), 0 0 0 4px rgba(224, 122, 60, .75), 0 12px 40px rgba(0, 0, 0, .55); }
+  }
+  .card.flash { animation: cardFlash 2.2s ease 1; }
 
   /* мини-карусель */
   .mini {
@@ -647,9 +653,35 @@ const browserSr = (navigator.languages || [navigator.language || ""]).some(l => 
 renderContacts();
 renderShare();
 setLang(savedLang || (browserSr ? "sr" : "ru"));
+function scrollToHashCard() {
+  if (!/^#k[123]$/.test(location.hash)) return;
+  const card = document.getElementById(location.hash.slice(1));
+  if (!card) return;
+  card.scrollIntoView({ behavior: "smooth", block: "start" });
+  card.classList.remove("flash");
+  void card.offsetWidth; /* перезапуск анимации подсветки */
+  card.classList.add("flash");
+}
+window.addEventListener("hashchange", scrollToHashCard);
+
+/* Карточки строим сразу из fallback-списков — без прыжка макета,
+   а ответ API применяем, только если содержимое папок отличается. */
+buildCards(null);
+setLang(lang);
+scrollToHashCard();
+
 loadFileLists().then(byDir => {
+  if (!byDir) return;
+  const differs = KITTENS.some(k => {
+    const api = (byDir[k.dir] || []).slice().sort();
+    const fb = k.fallback.slice().sort();
+    return api.length !== fb.length || api.some((n, i) => n !== fb[i]);
+  });
+  if (!differs) return;
+  cardsBox.innerHTML = "";
+  filesByKitten.length = 0;
   buildCards(byDir);
-  setLang(lang); /* проставить тексты в свежесозданных карточках */
+  setLang(lang);
 });
 </script>
 </body>
