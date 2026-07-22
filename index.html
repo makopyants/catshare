@@ -147,6 +147,7 @@
   .contact-buttons a:hover { transform: translateY(-2px); opacity: .92; }
   .btn-tg { background: #2aabee; color: #fff; }
   .btn-wa { background: #25d366; color: #fff; }
+  .btn-viber { background: #7360f2; color: #fff; }
   .btn-phone { background: var(--accent); color: #fff; }
 
   footer {
@@ -197,9 +198,10 @@
    Пустая строка "" — кнопка не показывается.
    ============================================================ */
 const CONTACTS = {
-  telegram: "",        // ник без @, например "ivan_petrov"
-  phone:    "",        // например "+79991234567"
-  whatsapp: "",        // номер без + и пробелов, например "79991234567"
+  telegram: "devthanatos",   // ник без @
+  phone:    "+381621928923", // для кнопки «позвонить»
+  whatsapp: "381621928923",  // номер без + и пробелов
+  viber:    "+381621928923", // номер с +
 };
 
 /* Репозиторий, из которого страница берёт список фото/видео.
@@ -328,7 +330,8 @@ function renderContacts() {
   };
   if (CONTACTS.telegram) add(`https://t.me/${CONTACTS.telegram}`, "btn-tg", "✈️ Telegram");
   if (CONTACTS.whatsapp) add(`https://wa.me/${CONTACTS.whatsapp}`, "btn-wa", "💬 WhatsApp");
-  if (CONTACTS.phone)    add(`tel:${CONTACTS.phone}`, "btn-phone", `📞 ${CONTACTS.phone}`);
+  if (CONTACTS.viber)    add(`viber://chat?number=${encodeURIComponent(CONTACTS.viber)}`, "btn-viber", "☎️ Viber");
+  if (CONTACTS.phone)    add(`tel:${CONTACTS.phone}`, "btn-phone", `📞 ${CONTACTS.phone.replace(/(\+381)(\d{2})(\d{4})(\d{3})/, "$1 $2 $3 $4")}`);
   if (!box.children.length) {
     const p = document.createElement("p");
     p.style.color = "var(--muted)";
