@@ -664,10 +664,24 @@ function scrollToHashCard() {
 }
 window.addEventListener("hashchange", scrollToHashCard);
 
+/* Карточки строим сразу из fallback-списков — без прыжка макета,
+   а ответ API применяем, только если содержимое папок отличается. */
+buildCards(null);
+setLang(lang);
+scrollToHashCard();
+
 loadFileLists().then(byDir => {
+  if (!byDir) return;
+  const differs = KITTENS.some(k => {
+    const api = (byDir[k.dir] || []).slice().sort();
+    const fb = k.fallback.slice().sort();
+    return api.length !== fb.length || api.some((n, i) => n !== fb[i]);
+  });
+  if (!differs) return;
+  cardsBox.innerHTML = "";
+  filesByKitten.length = 0;
   buildCards(byDir);
-  setLang(lang); /* проставить тексты в свежесозданных карточках */
-  scrollToHashCard(); /* карточки строятся позже загрузки — доскроллить к якорю из ссылки */
+  setLang(lang);
 });
 </script>
 </body>
