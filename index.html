@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Наши котята</title>
+<meta property="og:title" content="Наши котята">
+<meta property="og:description" content="Фото и видео котят. Контакты внутри.">
+<style>
+  /* ============================================================
+     НАСТРОЙКИ ВНЕШНЕГО ВИДА — менять не обязательно
+     ============================================================ */
+  :root {
+    --bg: #faf6f1;
+    --card: #ffffff;
+    --text: #3d3229;
+    --muted: #8a7d6f;
+    --accent: #e07a5f;
+    --accent-soft: #f8e3dc;
+    --radius: 18px;
+    --shadow: 0 4px 20px rgba(61, 50, 41, 0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  /* Шапка */
+  header { text-align: center; padding: 56px 0 32px; }
+  header .paw { font-size: 3rem; }
+  header h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); margin: 8px 0 12px; }
+  header p.subtitle {
+    color: var(--muted);
+    font-size: 1.1rem;
+    max-width: 620px;
+    margin: 0 auto;
+    white-space: pre-line;
+  }
+
+  /* Галерея */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+    padding: 24px 0 40px;
+  }
+  .gallery .item {
+    background: var(--card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+    transition: transform .18s ease;
+  }
+  .gallery .item:hover { transform: translateY(-3px) scale(1.01); }
+  .gallery .item img,
+  .gallery .item video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .gallery .item.video-item { position: relative; }
+  .gallery .item.video-item::after {
+    content: "▶";
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 58px; height: 58px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.45);
+    color: #fff;
+    font-size: 1.3rem;
+    padding-left: 5px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .empty-note {
+    text-align: center;
+    color: var(--muted);
+    padding: 60px 20px;
+    background: var(--card);
+    border-radius: var(--radius);
+    margin-bottom: 40px;
+  }
+
+  /* Лайтбокс */
+  .lightbox {
+    position: fixed; inset: 0;
+    background: rgba(20, 15, 10, .92);
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 100;
+    padding: 20px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img, .lightbox video {
+    max-width: 96vw; max-height: 88vh;
+    border-radius: 10px;
+  }
+  .lightbox .close {
+    position: absolute; top: 16px; right: 22px;
+    font-size: 2.2rem; color: #fff;
+    background: none; border: none; cursor: pointer;
+    line-height: 1;
+  }
+  .lightbox .nav {
+    position: absolute; top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.4rem; color: #fff;
+    background: rgba(255,255,255,.12);
+    border: none; cursor: pointer;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+  }
+  .lightbox .prev { left: 14px; }
+  .lightbox .next { right: 14px; }
+
+  /* Контакты */
+  .contacts {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 36px 28px;
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .contacts h2 { margin-bottom: 6px; }
+  .contacts p.note { color: var(--muted); margin-bottom: 22px; white-space: pre-line; }
+  .contact-buttons {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    justify-content: center;
+  }
+  .contact-buttons a {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 26px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    transition: transform .15s ease, opacity .15s ease;
+  }
+  .contact-buttons a:hover { transform: translateY(-2px); opacity: .92; }
+  .btn-tg { background: #2aabee; color: #fff; }
+  .btn-wa { background: #25d366; color: #fff; }
+  .btn-phone { background: var(--accent); color: #fff; }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: .9rem;
+    padding-bottom: 36px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="paw">🐾</div>
+    <!-- ЗАГОЛОВОК: замени на свой -->
+    <h1 id="title">Наши котята</h1>
+    <!-- ОПИСАНИЕ: напиши здесь свой текст про котят -->
+    <p class="subtitle" id="subtitle">Здесь будет твой текст про котят — возраст, характер, что умеют. Отредактируй его в index.html.</p>
+  </header>
+
+  <div class="gallery" id="gallery"></div>
+  <div class="empty-note" id="emptyNote" hidden>
+    Фотографии скоро появятся 🐱<br>
+    <small>(положи файлы в папку <code>media/</code> и сделай git push)</small>
+  </div>
+
+  <section class="contacts">
+    <h2>Связаться с нами</h2>
+    <!-- ТЕКСТ ПОД КОНТАКТАМИ: тоже можно поменять -->
+    <p class="note">Пишите или звоните — с радостью расскажем подробнее и покажем котят.</p>
+    <div class="contact-buttons" id="contactButtons"></div>
+  </section>
+
+  <footer>Сделано с ❤️ и котятами</footer>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="close" aria-label="Закрыть">×</button>
+  <button class="nav prev" aria-label="Назад">‹</button>
+  <div id="lightboxContent"></div>
+  <button class="nav next" aria-label="Вперёд">›</button>
+</div>
+
+<script>
+/* ============================================================
+   КОНТАКТЫ — впиши свои значения.
+   Пустая строка "" — кнопка не показывается.
+   ============================================================ */
+const CONTACTS = {
+  telegram: "",        // ник без @, например "ivan_petrov"
+  phone:    "",        // например "+79991234567"
+  whatsapp: "",        // номер без + и пробелов, например "79991234567"
+};
+
+/* Репозиторий, из которого страница берёт список фото/видео.
+   Заполняется автоматически, менять не нужно. */
+const OWNER = "makopyants";
+const REPO  = "catshare";
+const MEDIA_DIR = "media";
+
+const IMG_EXT = ["jpg", "jpeg", "png", "webp", "gif", "avif"];
+const VID_EXT = ["mp4", "webm", "mov", "m4v"];
+
+const gallery = document.getElementById("gallery");
+const emptyNote = document.getElementById("emptyNote");
+let mediaItems = [];
+
+function ext(name) { return name.split(".").pop().toLowerCase(); }
+
+async function loadGallery() {
+  let files = [];
+  try {
+    const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${MEDIA_DIR}`);
+    if (res.ok) {
+      const data = await res.json();
+      files = data
+        .filter(f => f.type === "file")
+        .map(f => f.name)
+        .filter(n => IMG_EXT.includes(ext(n)) || VID_EXT.includes(ext(n)));
+    }
+  } catch (e) { /* нет сети до API — покажем заглушку */ }
+
+  // фото сначала, видео после, внутри — по имени
+  files.sort((a, b) => {
+    const av = VID_EXT.includes(ext(a)), bv = VID_EXT.includes(ext(b));
+    if (av !== bv) return av - bv;
+    return a.localeCompare(b, undefined, { numeric: true });
+  });
+
+  if (!files.length) { emptyNote.hidden = false; return; }
+
+  mediaItems = files.map(name => ({
+    name,
+    src: `${MEDIA_DIR}/${encodeURIComponent(name)}`,
+    isVideo: VID_EXT.includes(ext(name)),
+  }));
+
+  mediaItems.forEach((item, i) => {
+    const div = document.createElement("div");
+    div.className = "item" + (item.isVideo ? " video-item" : "");
+    if (item.isVideo) {
+      const v = document.createElement("video");
+      v.src = item.src;
+      v.preload = "metadata";
+      v.muted = true;
+      v.playsInline = true;
+      div.appendChild(v);
+    } else {
+      const img = document.createElement("img");
+      img.src = item.src;
+      img.loading = "lazy";
+      img.alt = "Котёнок";
+      div.appendChild(img);
+    }
+    div.addEventListener("click", () => openLightbox(i));
+    gallery.appendChild(div);
+  });
+}
+
+/* Лайтбокс */
+const lightbox = document.getElementById("lightbox");
+const lightboxContent = document.getElementById("lightboxContent");
+let current = 0;
+
+function openLightbox(i) {
+  current = i;
+  renderLightbox();
+  lightbox.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeLightbox() {
+  lightbox.classList.remove("open");
+  lightboxContent.innerHTML = "";
+  document.body.style.overflow = "";
+}
+function renderLightbox() {
+  const item = mediaItems[current];
+  lightboxContent.innerHTML = "";
+  if (item.isVideo) {
+    const v = document.createElement("video");
+    v.src = item.src;
+    v.controls = true;
+    v.autoplay = true;
+    v.playsInline = true;
+    lightboxContent.appendChild(v);
+  } else {
+    const img = document.createElement("img");
+    img.src = item.src;
+    lightboxContent.appendChild(img);
+  }
+}
+function step(d) {
+  current = (current + d + mediaItems.length) % mediaItems.length;
+  renderLightbox();
+}
+lightbox.querySelector(".close").addEventListener("click", closeLightbox);
+lightbox.querySelector(".prev").addEventListener("click", e => { e.stopPropagation(); step(-1); });
+lightbox.querySelector(".next").addEventListener("click", e => { e.stopPropagation(); step(1); });
+lightbox.addEventListener("click", e => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener("keydown", e => {
+  if (!lightbox.classList.contains("open")) return;
+  if (e.key === "Escape") closeLightbox();
+  if (e.key === "ArrowLeft") step(-1);
+  if (e.key === "ArrowRight") step(1);
+});
+
+/* Кнопки контактов */
+function renderContacts() {
+  const box = document.getElementById("contactButtons");
+  const add = (href, cls, label) => {
+    const a = document.createElement("a");
+    a.href = href;
+    a.className = cls;
+    a.textContent = label;
+    a.target = "_blank";
+    a.rel = "noopener";
+    box.appendChild(a);
+  };
+  if (CONTACTS.telegram) add(`https://t.me/${CONTACTS.telegram}`, "btn-tg", "✈️ Telegram");
+  if (CONTACTS.whatsapp) add(`https://wa.me/${CONTACTS.whatsapp}`, "btn-wa", "💬 WhatsApp");
+  if (CONTACTS.phone)    add(`tel:${CONTACTS.phone}`, "btn-phone", `📞 ${CONTACTS.phone}`);
+  if (!box.children.length) {
+    const p = document.createElement("p");
+    p.style.color = "var(--muted)";
+    p.textContent = "Контакты появятся здесь — впиши их в CONTACTS в index.html";
+    box.appendChild(p);
+  }
+}
+
+loadGallery();
+renderContacts();
+</script>
+</body>
+</html>
