@@ -20,6 +20,25 @@ git push
 - **Фото:** jpg, jpeg, png, webp, gif, avif
 - **Видео:** mp4, webm, m4v (mov может не открыться в Chrome на Windows/Android — лучше конвертировать в mp4)
 
+⚠️ Сырые файлы с айфона (HEIC/MOV) в браузерах вне Safari не работают.
+Клади их в `media_originals/` (папка не попадает в git) и конвертируй:
+
+```bash
+# фото HEIC → JPG (до 2000px)
+for f in media_originals/*.[Hh][Ee][Ii][Cc]; do
+  base=$(basename "$f" | sed 's/\.[Hh][Ee][Ii][Cc]$//' | tr '[:upper:]' '[:lower:]')
+  sips -s format jpeg -s formatOptions 82 --resampleHeightWidthMax 2000 "$f" --out "media/${base}.jpg"
+done
+
+# видео MOV → MP4 (H.264, до 1280px)
+for f in media_originals/*.MOV; do
+  base=$(basename "$f" .MOV | tr '[:upper:]' '[:lower:]')
+  ffmpeg -y -i "$f" -c:v libx264 -crf 26 -preset medium \
+    -vf "scale=w=1280:h=1280:force_original_aspect_ratio=decrease:force_divisible_by=2" \
+    -c:a aac -b:a 128k -movflags +faststart "media/${base}.mp4"
+done
+```
+
 Файлы показываются по алфавиту (фото сначала, видео после). Хочешь задать
 порядок — назови их `01-...jpg`, `02-...jpg` и т.д.
 
