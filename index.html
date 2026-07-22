@@ -300,6 +300,43 @@
   .contact-buttons a:nth-child(3) { background-position: 0 0, -320px -80px; }
   .contact-buttons a:nth-child(4) { background-position: 0 0, -90px -120px; }
   .contact-buttons a:hover { transform: translateY(-2px); filter: brightness(1.15); }
+
+  /* Поделиться */
+  .share { text-align: center; padding: 0 0 30px; }
+  .share-title { color: var(--ink-soft); font-size: .95rem; margin-bottom: 10px; }
+  .share-buttons { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; }
+  .share-buttons button {
+    font-family: "Monomakh", Georgia, serif;
+    font-size: 1.02rem;
+    color: var(--ink);
+    padding: 9px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    background: url("parchment.jpg") var(--parch);
+    background-size: 300px auto;
+    border: 2px solid #8a6a4a;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .25), inset 0 0 14px rgba(96, 62, 22, .15);
+    transition: transform .15s ease, filter .15s ease;
+  }
+  .share-buttons button:hover { transform: translateY(-2px); filter: brightness(1.05); }
+
+  .toast {
+    position: fixed;
+    left: 50%; bottom: 26px;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(34, 20, 9, .92);
+    color: var(--parch);
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-size: .95rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease;
+    z-index: 200;
+    max-width: 90vw;
+    text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
@@ -328,6 +365,16 @@
     <p class="note" data-i18n="contactsNote"></p>
     <div class="contact-buttons" id="contactButtons"></div>
   </section>
+
+  <section class="share">
+    <p class="share-title" data-i18n="shareTitle"></p>
+    <div class="share-buttons">
+      <button type="button" id="shareTg">✈️ Telegram</button>
+      <button type="button" id="shareTh">🧵 Threads</button>
+      <button type="button" id="shareIg">📸 Instagram</button>
+    </div>
+  </section>
+  <div class="toast" id="toast"></div>
 
   <section class="about">
     <p data-i18n="about1"></p>
@@ -388,6 +435,9 @@ const I18N = {
     closing: "Котикам предстоит вакцинация, после которой они будут готовы к удомлению. Хочется найти им самых добрых и заботливых людей. Они невероятно милые и тянутся к человеку 🐱",
     contactsNote: "Белград, можем привезти и в другие города.\nПишите или звоните — с радостью расскажем подробнее и покажем котят.",
     empty: "Фотографии скоро появятся 🐱",
+    shareTitle: "Расскажи друзьям — вдруг их дом ждёт котёнка",
+    shareText: "Три сладких котобулочки ищут дом 🐾 Белград, ~7 недель, ласковые и к лотку приучены.",
+    toastCopied: "Ссылка скопирована — вставь её в сторис или директ",
   },
   sr: {
     title: "Три слатке мачје земичке траже дом 🐾",
@@ -402,10 +452,15 @@ const I18N = {
     closing: "Мачиће ускоро чека вакцинација, после које ће бити спремни за удомљавање. Желимо да им нађемо најбоље и најбрижније људе. Невероватно су слатки и привржени човеку 🐱",
     contactsNote: "Београд, можемо да их довеземо и у друге градове.\nПишите или позовите — радо ћемо испричати више и показати мачиће.",
     empty: "Фотографије стижу ускоро 🐱",
+    shareTitle: "Подели са пријатељима — можда њихов дом чека маче",
+    shareText: "Три слатке мачје земичке траже дом 🐾 Београд, око 7 недеља, мазне и навикле на тоалет.",
+    toastCopied: "Линк је копиран — налепи га у сторију или поруку",
   },
 };
+let lang = "ru";
 
-function setLang(lang) {
+function setLang(l) {
+  lang = l;
   document.documentElement.lang = lang;
   document.title = I18N[lang].title;
   document.querySelectorAll("[data-i18n]").forEach(el => {
@@ -631,6 +686,45 @@ function renderContacts() {
   if (CONTACTS.viber)    add(`viber://chat?number=${encodeURIComponent(CONTACTS.viber)}`, "btn-viber", "☎️ Viber");
   if (CONTACTS.phone)    add(`tel:${CONTACTS.phone}`, "btn-phone", `📞 ${CONTACTS.phone.replace(/(\+381)(\d{2})(\d{4})(\d{3})/, "$1 $2 $3 $4")}`);
 }
+
+/* ============ Кнопки «поделиться» ============ */
+const SHARE_URL = "https://makopyants.github.io/catshare/";
+let toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 3000);
+}
+async function copyLink() {
+  try {
+    await navigator.clipboard.writeText(SHARE_URL);
+  } catch (e) {
+    const ta = document.createElement("textarea");
+    ta.value = SHARE_URL;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+  }
+  showToast(I18N[lang].toastCopied);
+}
+document.getElementById("shareTg").addEventListener("click", () => {
+  window.open(`https://t.me/share/url?url=${encodeURIComponent(SHARE_URL)}&text=${encodeURIComponent(I18N[lang].shareText)}`, "_blank", "noopener");
+});
+document.getElementById("shareTh").addEventListener("click", () => {
+  window.open(`https://www.threads.net/intent/post?text=${encodeURIComponent(I18N[lang].shareText + "\n\n" + SHARE_URL)}`, "_blank", "noopener");
+});
+document.getElementById("shareIg").addEventListener("click", () => {
+  // у Instagram нет веб-интента: на телефоне открываем системное меню
+  // «поделиться» (там есть Instagram), на десктопе копируем ссылку
+  if (navigator.share) {
+    navigator.share({ title: I18N[lang].title, text: I18N[lang].shareText, url: SHARE_URL }).catch(() => {});
+  } else {
+    copyLink();
+  }
+});
 
 loadCarousel();
 renderContacts();
