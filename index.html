@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Наши котята</title>
-<meta property="og:title" content="Наши котята">
-<meta property="og:description" content="Фото и видео котят. Контакты внутри.">
+<title>Три сладких котобулочки ищут дом 🐾</title>
+<meta property="og:title" content="Три сладких котобулочки ищут дом 🐾">
+<meta property="og:description" content="Белград. Ласковые, ручные, к лотку приучены. Можем привезти и в другие города.">
 <style>
   /* ============================================================
      НАСТРОЙКИ ВНЕШНЕГО ВИДА — менять не обязательно
@@ -145,6 +145,28 @@
     z-index: 101;
   }
 
+  /* Рассказ о котятах */
+  .about {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 8px 0 40px;
+  }
+  .about p { margin-bottom: 14px; }
+  .kitten-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .kitten-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 18px 16px;
+  }
+  .kitten-card h3 { color: var(--accent); margin-bottom: 6px; }
+  .kitten-card p { margin: 0; font-size: .95rem; }
+
   /* Контакты */
   .contacts {
     text-align: center;
@@ -175,10 +197,7 @@
 
 <div class="wrap">
   <header>
-    <!-- ЗАГОЛОВОК: замени на свой -->
-    <h1 id="title">🐾 Наши котята</h1>
-    <!-- ОПИСАНИЕ: напиши здесь свой текст про котят -->
-    <p class="subtitle" id="subtitle">Здесь будет твой текст про котят — отредактируй его в index.html.</p>
+    <h1 id="title">Три сладких котобулочки ищут дом 🐾</h1>
   </header>
 
   <div class="carousel" id="carousel">
@@ -194,9 +213,39 @@
   </div>
 
   <section class="contacts">
-    <!-- ТЕКСТ ПОД КОНТАКТАМИ: тоже можно поменять -->
-    <p class="note">Пишите или звоните — с радостью расскажем подробнее и покажем котят.</p>
+    <p class="note">Белград, можем привезти и в другие города.
+Пишите или звоните — с радостью расскажем подробнее и покажем котят.</p>
     <div class="contact-buttons" id="contactButtons"></div>
+  </section>
+
+  <section class="about">
+    <p>Были найдены под кустом в сербской деревне совсем крохами, недель трёх от роду.
+    Мы их подобрали, привезли в Белград, отмыли, откормили, обработали от паразитов.
+    Быстро приучились к лотку.</p>
+    <p>Сейчас им примерно 6–7 недель. Они ласковые, ручные, активные —
+    изучают окружающий мир и проверяют его на прочность.</p>
+
+    <div class="kitten-cards">
+      <div class="kitten-card">
+        <h3>Крошка-кошка</h3>
+        <p>Самая маленькая и самая спокойная. Засыпает на руках.
+        Первая догадалась, для чего нужен лоток. Умничка 🤍</p>
+      </div>
+      <div class="kitten-card">
+        <h3>Кошка-блондинка</h3>
+        <p>Любознательная девочка с характером. Любит тыгыдыки,
+        орать и кусать брата за ухо.</p>
+      </div>
+      <div class="kitten-card">
+        <h3>Чёткий пацанчик</h3>
+        <p>Орал под кустом громче всех, защищает сестриц,
+        бойкий и прыгучий. Настоящий мужик 😎</p>
+      </div>
+    </div>
+
+    <p>Котикам предстоит вакцинация, после которой они будут готовы к удомлению.
+    Хочется найти им самых добрых и заботливых людей.
+    Они невероятно милые и тянутся к человеку 🐱</p>
   </section>
 </div>
 
