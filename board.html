@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Три сладких котобулочки ищут дом 🐾</title>
+<meta property="og:title" content="Три сладких котобулочки ищут дом 🐾">
+<meta property="og:description" content="Белград. Ласковые, ручные, к лотку приучены. Можем привезти и в другие города.">
+<meta property="og:image" content="https://makopyants.github.io/catshare/og-cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  @font-face {
+    font-family: "Monomakh";
+    src: url("fonts/monomakh.otf") format("opentype");
+    font-display: swap;
+  }
+  :root {
+    --parch: #ecd9b3;
+    --ink: #3b2617;
+    --ink-soft: #6e553d;
+    --blood: #7a2417;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  html { background: #241711; }
+  body {
+    color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.55;
+    background:
+      linear-gradient(rgba(18, 10, 5, .35), rgba(18, 10, 5, .35)),
+      url("wood.jpg") #261811;
+    background-size: auto, 1280px auto;
+  }
+  h1, h2, .lang-switch button, .counter, .contact-buttons a { font-family: "Monomakh", Georgia, serif; font-weight: normal; }
+
+  .board { max-width: 1180px; margin: 0 auto; padding: 16px 14px 40px; position: relative; }
+
+  /* пергаментные листы, прибитые к доске */
+  .sheet {
+    position: relative;
+    background:
+      radial-gradient(120% 100% at 50% 0%, rgba(255, 246, 220, .30) 0%, rgba(148, 102, 44, 0) 45%, rgba(96, 62, 22, .30) 100%),
+      url("parchment.jpg") #e6d0a6;
+    background-size: auto, 300px auto;
+    border-radius: 14px 10px 16px 9px;
+    box-shadow:
+      inset 0 0 60px rgba(96, 62, 22, .33),
+      0 12px 34px rgba(0, 0, 0, .5);
+  }
+  .nail {
+    position: absolute;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 32%, #5d4a38 0%, #3a2b1e 45%, #241811 100%);
+    box-shadow: 2px 3px 4px rgba(59, 38, 23, .45), inset 0 -1px 1px rgba(0, 0, 0, .4);
+    z-index: 3;
+  }
+
+  /* шапка-лист */
+  .head-sheet { text-align: center; padding: 14px 18px 16px; margin-bottom: 22px; }
+  .medallion {
+    width: 74px; height: 74px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 2px;
+    mix-blend-mode: multiply;
+  }
+  h1 { font-size: clamp(1.4rem, 4.4vw, 2.2rem); }
+  .intro { color: var(--ink-soft); font-size: .98rem; max-width: 760px; margin: 6px auto 0; }
+  .lang-switch {
+    position: absolute;
+    top: 12px; right: 14px;
+    display: flex; gap: 4px;
+    background: linear-gradient(rgba(20, 10, 5, .4), rgba(20, 10, 5, .4)), url("wood.jpg") #3a2412;
+    background-size: auto, 300px auto;
+    border-radius: 999px;
+    padding: 3px;
+    z-index: 5;
+  }
+  .lang-switch button {
+    border: none; background: none;
+    color: #d8c39a;
+    font-size: .92rem;
+    padding: 3px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .lang-switch button.active {
+    background: url("parchment.jpg") var(--parch);
+    background-size: 300px auto;
+    color: var(--ink);
+  }
+
+  /* три карточки */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 26px;
+    align-items: start;
+  }
+  .card { padding: 12px 14px 18px; }
+  .card:nth-child(1) { transform: rotate(-1.1deg); }
+  .card:nth-child(2) { transform: rotate(.7deg); }
+  .card:nth-child(3) { transform: rotate(-.5deg); }
+  .card h2 {
+    text-align: center;
+    color: var(--blood);
+    font-size: 1.45rem;
+    margin: 4px 0 10px;
+  }
+  .card .desc { font-size: .96rem; margin-top: 12px; }
+
+  /* мини-карусель карточки */
+  .mini {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    border: 1px solid #150b06;
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 8px;
+    background:
+      linear-gradient(rgba(15, 8, 4, .30), rgba(15, 8, 4, .30)),
+      url("wood.jpg") #2a1b10;
+    background-size: auto, 600px auto;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .4), inset 0 0 10px rgba(0, 0, 0, .5);
+  }
+  .mini .track {
+    display: flex;
+    height: 100%;
+    background: #171310;
+    border-radius: 3px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mini .track::-webkit-scrollbar { display: none; }
+  .mini .slide {
+    flex: 0 0 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .mini .slide img.bg {
+    position: absolute; inset: -8%;
+    width: 116%; height: 116%;
+    object-fit: cover;
+    filter: blur(16px) brightness(.55);
+  }
+  .mini .slide img.main {
+    position: relative; z-index: 1;
+    max-width: 100%; max-height: 100%;
+    object-fit: contain;
+  }
+  .mini .nav {
+    position: absolute; top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 34px; height: 34px;
+    border: 1px solid rgba(59, 38, 23, .6);
+    border-radius: 50%;
+    background: rgba(236, 217, 179, .82);
+    color: var(--ink); font-size: 1.25rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mini .nav:hover { background: var(--parch); }
+  .mini .prev { left: 14px; }
+  .mini .next { right: 14px; }
+  .counter {
+    position: absolute; top: 14px; right: 16px;
+    z-index: 5;
+    background: rgba(34, 20, 9, .78);
+    color: var(--parch);
+    font-size: .85rem;
+    padding: 2px 10px;
+    border-radius: 999px;
+  }
+
+  /* нижний лист: контакты и шеринг */
+  .foot-sheet { text-align: center; padding: 20px 18px 24px; margin-top: 26px; }
+  .foot-sheet p.note { color: var(--ink-soft); font-size: .95rem; margin-bottom: 12px; white-space: pre-line; }
+  .contact-buttons { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .s-icon { width: 19px; height: 19px; display: block; flex: none; }
+  .contact-buttons a {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 11px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.08rem;
+    color: #f2e3c2;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .65);
+    background: linear-gradient(rgba(20, 10, 5, .40), rgba(20, 10, 5, .32)), url("wood.jpg") #3a2412;
+    background-size: auto, 420px auto;
+    border: 1px solid #1d100a;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .4), inset 0 1px 0 rgba(255, 220, 160, .14);
+    transition: transform .15s ease, filter .15s ease;
+  }
+  .contact-buttons a:nth-child(2) { background-position: 0 0, -160px -40px; }
+  .contact-buttons a:nth-child(3) { background-position: 0 0, -320px -80px; }
+  .contact-buttons a:nth-child(4) { background-position: 0 0, -90px -120px; }
+  .contact-buttons a:hover { transform: translateY(-2px); filter: brightness(1.15); }
+  .share-title { color: var(--ink-soft); font-size: .93rem; margin: 18px 0 8px; }
+  .share-buttons { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; }
+  .share-buttons button {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: "Monomakh", Georgia, serif;
+    font-size: .98rem;
+    color: var(--ink);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    background: url("parchment.jpg") var(--parch);
+    background-size: 300px auto;
+    border: 2px solid #8a6a4a;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .25), inset 0 0 12px rgba(96, 62, 22, .15);
+  }
+  .share-buttons button:hover { transform: translateY(-2px); }
+
+  /* лайтбокс */
+  .lightbox {
+    position: fixed; inset: 0;
+    background: rgba(20, 15, 10, .94);
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 100;
+    padding: 16px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 96vw; max-height: 90vh; border-radius: 10px; }
+  .lightbox .close {
+    position: absolute; top: 14px; right: 20px;
+    font-size: 2.2rem; color: #fff;
+    background: none; border: none; cursor: pointer;
+    line-height: 1; z-index: 101;
+  }
+  .lightbox .lnav {
+    position: absolute; top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.2rem; color: #fff;
+    background: rgba(255,255,255,.12);
+    border: none; cursor: pointer;
+    width: 50px; height: 50px;
+    border-radius: 50%;
+  }
+  .lightbox .lprev { left: 14px; }
+  .lightbox .lnext { right: 14px; }
+</style>
+</head>
+<body>
+
+<div class="board">
+  <div class="lang-switch" id="langSwitch">
+    <button data-lang="ru">РУС</button>
+    <button data-lang="sr">СРП</button>
+  </div>
+
+  <div class="sheet head-sheet">
+    <i class="nail" style="top:8px;left:10px"></i><i class="nail" style="top:8px;right:10px"></i>
+    <img class="medallion" src="medallion.jpg" alt="">
+    <h1 data-i18n="title">Три сладких котобулочки ищут дом 🐾</h1>
+    <p class="intro" data-i18n="about1"></p>
+    <p class="intro" data-i18n="about2"></p>
+  </div>
+
+  <div class="cards" id="cards"></div>
+
+  <div class="sheet foot-sheet">
+    <i class="nail" style="top:8px;left:12px"></i><i class="nail" style="top:8px;right:12px"></i>
+    <p class="note" data-i18n="closing"></p>
+    <p class="note" data-i18n="contactsNote"></p>
+    <div class="contact-buttons" id="contactButtons"></div>
+    <p class="share-title" data-i18n="shareTitle"></p>
+    <div class="share-buttons" id="shareButtons"></div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="close" aria-label="Закрыть">×</button>
+  <button class="lnav lprev">‹</button>
+  <div id="lightboxContent"></div>
+  <button class="lnav lnext">›</button>
+</div>
+
+<script>
+const CONTACTS = {
+  telegram: "devthanatos",
+  phone:    "+381621928923",
+  whatsapp: "381621928923",
+  viber:    "+381621928923",
+};
+const SHARE_URL = "https://makopyants.github.io/catshare/";
+const MEDIA_DIR = "media";
+
+/* фото каждого котёнка */
+const KITTENS = [
+  { key: "k1", files: ["2026-07-22 17.24.28.jpg", "2026-07-22 17.24.59.jpg", "2026-07-22 17.25.05.jpg", "2026-07-22 17.28.10.jpg", "2026-07-22 17.28.17.jpg", "2026-07-22 17.28.23.jpg", "photo_2026-07-22 17.28.28.jpeg"] },
+  { key: "k2", files: ["photo_2026-07-22 17.28.33.jpeg", "photo_2026-07-22 17.28.35.jpeg", "photo_2026-07-22 17.28.36.jpeg", "photo_2026-07-22 17.28.38.jpeg", "photo_2026-07-22 17.28.39.jpeg", "photo_2026-07-22 17.28.41.jpeg", "photo_2026-07-22 17.28.42.jpeg", "photo_2026-07-22 17.28.43.jpeg", "photo_2026-07-22 17.28.44.jpeg", "photo_2026-07-22 17.28.45.jpeg", "photo_2026-07-22 17.28.46.jpeg", "photo_2026-07-22 17.28.58.jpeg", "photo_2026-07-22 17.28.59.jpeg"] },
+  { key: "k3", files: ["photo_2026-07-22 17.28.40.jpeg", "photo_2026-07-22 17.28.47.jpeg", "photo_2026-07-22 17.28.48.jpeg", "photo_2026-07-22 17.28.49.jpeg", "photo_2026-07-22 17.28.50.jpeg", "photo_2026-07-22 17.28.51.jpeg", "photo_2026-07-22 17.28.52.jpeg", "photo_2026-07-22 17.28.53.jpeg", "photo_2026-07-22 17.28.54.jpeg", "photo_2026-07-22 17.28.55.jpeg", "photo_2026-07-22 17.28.56.jpeg", "photo_2026-07-22 17.29.00.jpeg", "photo_2026-07-22 17.29.01.jpeg", "photo_2026-07-22 17.29.02.jpeg", "photo_2026-07-22 17.29.03.jpeg", "photo_2026-07-22 17.29.04.jpeg", "photo_2026-07-22 17.29.05.jpeg", "photo_2026-07-22 17.29.07.jpeg", "photo_2026-07-22 17.29.08.jpeg"] },
+];
+
+const I18N = {
+  ru: {
+    title: "Три сладких котобулочки ищут дом 🐾",
+    about1: "Были найдены под кустом в сербской деревне совсем крохами. Мы их отмыли, откормили, обработали от паразитов и привезли в Белград — быстро приучились к лотку.",
+    about2: "Сейчас им примерно 6–7 недель. Они ласковые, ручные, активные — изучают окружающий мир и проверяют его на прочность.",
+    k1title: "Крошка-кошка",
+    k1text: "Самая маленькая и самая спокойная. Засыпает на руках. Первая догадалась, для чего нужен лоток. Умничка 🤍",
+    k2title: "Кошка-блондинка",
+    k2text: "Любознательная девочка с характером. Любит тыгыдыки, орать и кусать брата за ухо.",
+    k3title: "Чёткий пацанчик",
+    k3text: "Орал под кустом громче всех, защищает сестриц, бойкий и прыгучий. Настоящий мужик 😎",
+    closing: "Котикам предстоит вакцинация, после которой они будут готовы к удомлению. Хочется найти им самых добрых и заботливых людей 🐱",
+    contactsNote: "Белград, можем привезти и в другие города.\nПишите или звоните — с радостью расскажем подробнее и покажем котят.",
+    shareTitle: "Расскажи друзьям — вдруг их дом ждёт котёнка",
+    shareText: "Три сладких котобулочки ищут дом 🐾 Белград, ~7 недель, ласковые и к лотку приучены.",
+  },
+  sr: {
+    title: "Три слатке мачје земичке траже дом 🐾",
+    about1: "Нашли смо их испод жбуна у једном селу у Србији, сасвим мале. Окупали смо их, нахранили, очистили од паразита и довели у Београд — брзо су навикле на тоалет.",
+    about2: "Сада имају око 6–7 недеља. Мазне су, питоме и активне — истражују свет око себе и испробавају га на чврстину.",
+    k1title: "Мала маца",
+    k1text: "Најмања и најмирнија. Заспи у наручју. Прва је схватила чему служи тоалет. Паметница 🤍",
+    k2title: "Маца плавуша",
+    k2text: "Радознала девојчица са карактером. Воли јурњаву по стану, дерњаву и да гризе брата за уво.",
+    k3title: "Прави мангуп",
+    k3text: "Испод жбуна се драо најгласније, штити сестре, живахан и скакутав. Прави мушкарац 😎",
+    closing: "Мачиће ускоро чека вакцинација, после које ће бити спремни за удомљавање. Желимо да им нађемо најбоље људе 🐱",
+    contactsNote: "Београд, можемо да их довеземо и у друге градове.\nПишите или позовите — радо ћемо испричати више и показати мачиће.",
+    shareTitle: "Подели са пријатељима — можда њихов дом чека маче",
+    shareText: "Три слатке мачје земичке траже дом 🐾 Београд, око 7 недеља, мазне и навикле на тоалет.",
+  },
+};
+let lang = "ru";
+
+const ICONS = {
+  telegram: "M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z",
+  whatsapp: "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z",
+  viber: "M11.4 0C9.473.028 5.333.344 3.02 2.467 1.302 4.187.696 6.7.633 9.817.57 12.933.488 18.776 6.12 20.36h.003l-.004 2.416s-.037.977.61 1.177c.777.242 1.234-.5 1.98-1.302.407-.44.972-1.084 1.397-1.58 3.85.324 6.812-.416 7.148-.526.776-.252 5.176-.816 5.892-6.657.74-6.02-.36-9.83-2.34-11.546-.596-.55-3.006-2.3-8.375-2.323 0 0-.395-.025-1.037-.017zm.058 1.693c.545-.004.88.017.88.017 4.542.02 6.717 1.388 7.222 1.846 1.675 1.435 2.53 4.868 1.906 9.897v.002c-.604 4.878-4.174 5.184-4.832 5.395-.28.09-2.882.737-6.153.524 0 0-2.436 2.94-3.197 3.704-.12.12-.26.167-.352.144-.13-.033-.166-.188-.165-.414l.02-4.018c-4.762-1.32-4.485-6.292-4.43-8.895.054-2.604.543-4.738 1.996-6.173 1.96-1.773 5.474-2.018 7.11-2.03zm.38 2.602c-.167 0-.303.135-.304.302 0 .167.133.303.3.305 1.624.01 2.946.537 4.028 1.592 1.073 1.046 1.62 2.468 1.633 4.334.002.167.14.3.307.3.166-.002.3-.138.3-.304-.014-1.984-.618-3.596-1.816-4.764-1.19-1.16-2.692-1.753-4.447-1.765zm-3.96.695c-.19-.032-.4.005-.616.117l-.01.002c-.43.247-.816.562-1.146.932-.002.004-.006.004-.008.008-.267.323-.42.638-.46.948-.008.046-.01.093-.007.14 0 .136.022.27.065.4l.013.01c.135.48.473 1.276 1.205 2.604.42.768.903 1.5 1.446 2.186.27.344.56.673.87.984l.132.132c.31.308.64.6.983.87.686.543 1.418 1.027 2.186 1.447 1.328.733 2.126 1.07 2.604 1.206l.01.014c.13.042.265.064.4.064.048.002.095 0 .142-.007.31-.036.626-.19.947-.46.004 0 .003-.002.008-.005.37-.33.683-.72.93-1.148l.002-.01c.225-.432.15-.842-.18-1.12-.004 0-.698-.58-1.037-.83-.36-.255-.73-.492-1.113-.71-.51-.285-1.032-.106-1.248.174l-.447.564c-.23.283-.657.246-.657.246-3.12-.796-3.955-3.955-3.955-3.955s-.037-.426.248-.656l.563-.448c.277-.215.456-.737.17-1.248-.217-.383-.454-.755-.71-1.113-.25-.34-.828-1.033-.83-1.037-.14-.165-.32-.267-.518-.3zm4.49.88c-.158.002-.29.124-.3.282-.01.167.115.31.282.322 1.208.088 2.104.485 2.722 1.155.622.674.925 1.512.902 2.573-.002.167.13.305.297.31.167.002.305-.13.31-.297.024-1.19-.327-2.203-1.06-2.997-.738-.8-1.795-1.253-3.126-1.35h-.024zm.463 1.63c-.16.002-.29.127-.3.286-.008.167.12.31.288.32.552.03.918.185 1.17.446.253.26.406.653.435 1.212.01.167.15.295.318.287.167-.01.295-.15.287-.317-.033-.663-.222-1.2-.6-1.59-.377-.39-.9-.593-1.573-.63h-.017z",
+  phone: "M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z",
+  threads: "M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32L7.734 7.847c.98-1.454 2.568-2.256 4.478-2.256h.044c3.194.02 5.097 1.975 5.287 5.388.108.046.216.094.321.142 1.49.7 2.58 1.761 3.154 3.07.797 1.82.871 4.79-1.548 7.158-1.85 1.81-4.094 2.628-7.277 2.65Zm1.003-11.69c-.242 0-.487.007-.739.021-1.836.103-2.98.946-2.916 2.143.067 1.256 1.452 1.839 2.784 1.767 1.224-.065 2.818-.543 3.086-3.71a10.5 10.5 0 0 0-2.215-.221z",
+};
+function iconSvg(name) {
+  return `<svg class="s-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="${ICONS[name]}"/></svg>`;
+}
+
+/* ============ карточки ============ */
+const cardsBox = document.getElementById("cards");
+const minis = []; // {track, counter, files}
+
+KITTENS.forEach((k, ki) => {
+  const card = document.createElement("div");
+  card.className = "sheet card";
+  card.innerHTML = `
+    <i class="nail" style="top:7px;left:10px"></i><i class="nail" style="top:7px;right:10px"></i>
+    <h2 data-i18n="${k.key}title"></h2>
+    <div class="mini">
+      <div class="track"></div>
+      <button class="nav prev">‹</button>
+      <button class="nav next">›</button>
+      <div class="counter"></div>
+    </div>
+    <p class="desc" data-i18n="${k.key}text"></p>`;
+  cardsBox.appendChild(card);
+
+  const track = card.querySelector(".track");
+  const counter = card.querySelector(".counter");
+  k.files.forEach((name, i) => {
+    const slide = document.createElement("div");
+    slide.className = "slide";
+    const src = `${MEDIA_DIR}/${encodeURIComponent(name)}`;
+    const bg = document.createElement("img");
+    bg.src = src; bg.className = "bg"; bg.loading = "lazy"; bg.setAttribute("aria-hidden", "true");
+    const img = document.createElement("img");
+    img.src = src; img.className = "main"; img.loading = i === 0 ? "eager" : "lazy"; img.alt = "";
+    slide.append(bg, img);
+    slide.addEventListener("click", () => openLightbox(ki, i));
+    track.appendChild(slide);
+  });
+  const mini = { track, counter, files: k.files, current: 0 };
+  minis.push(mini);
+
+  const update = () => { counter.textContent = `${mini.current + 1} / ${k.files.length}`; };
+  update();
+  track.addEventListener("scroll", () => {
+    const i = Math.round(track.scrollLeft / track.clientWidth);
+    if (i !== mini.current && i >= 0 && i < k.files.length) { mini.current = i; update(); }
+  }, { passive: true });
+  const go = d => {
+    mini.current = (mini.current + d + k.files.length) % k.files.length;
+    track.scrollTo({ left: mini.current * track.clientWidth, behavior: "smooth" });
+    update();
+  };
+  card.querySelector(".prev").addEventListener("click", e => { e.stopPropagation(); go(-1); });
+  card.querySelector(".next").addEventListener("click", e => { e.stopPropagation(); go(1); });
+});
+
+/* ============ лайтбокс ============ */
+const lightbox = document.getElementById("lightbox");
+const lightboxContent = document.getElementById("lightboxContent");
+let lbKitten = 0, lbIndex = 0;
+
+function openLightbox(ki, i) {
+  lbKitten = ki; lbIndex = i;
+  renderLb();
+  lightbox.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function renderLb() {
+  const name = KITTENS[lbKitten].files[lbIndex];
+  lightboxContent.innerHTML = `<img src="${MEDIA_DIR}/${encodeURIComponent(name)}">`;
+}
+function closeLb() {
+  lightbox.classList.remove("open");
+  lightboxContent.innerHTML = "";
+  document.body.style.overflow = "";
+}
+function lbStep(d) {
+  const n = KITTENS[lbKitten].files.length;
+  lbIndex = (lbIndex + d + n) % n;
+  renderLb();
+}
+lightbox.querySelector(".close").addEventListener("click", closeLb);
+lightbox.querySelector(".lprev").addEventListener("click", e => { e.stopPropagation(); lbStep(-1); });
+lightbox.querySelector(".lnext").addEventListener("click", e => { e.stopPropagation(); lbStep(1); });
+lightbox.addEventListener("click", e => { if (e.target === lightbox) closeLb(); });
+document.addEventListener("keydown", e => {
+  if (!lightbox.classList.contains("open")) return;
+  if (e.key === "Escape") closeLb();
+  if (e.key === "ArrowLeft") lbStep(-1);
+  if (e.key === "ArrowRight") lbStep(1);
+});
+
+/* ============ контакты и шеринг ============ */
+function renderContacts() {
+  const box = document.getElementById("contactButtons");
+  const add = (href, icon, label) => {
+    const a = document.createElement("a");
+    a.href = href;
+    a.innerHTML = iconSvg(icon) + " " + label;
+    a.target = "_blank";
+    a.rel = "noopener";
+    box.appendChild(a);
+  };
+  add(`https://t.me/${CONTACTS.telegram}`, "telegram", "Telegram");
+  add(`https://wa.me/${CONTACTS.whatsapp}`, "whatsapp", "WhatsApp");
+  add(`viber://chat?number=${encodeURIComponent(CONTACTS.viber)}`, "viber", "Viber");
+  add(`tel:${CONTACTS.phone}`, "phone", CONTACTS.phone.replace(/(\+381)(\d{2})(\d{4})(\d{3})/, "$1 $2 $3 $4"));
+}
+function renderShare() {
+  const box = document.getElementById("shareButtons");
+  const mk = (icon, label, fn) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.innerHTML = iconSvg(icon) + " " + label;
+    b.addEventListener("click", fn);
+    box.appendChild(b);
+  };
+  mk("telegram", "Telegram", () =>
+    window.open(`https://t.me/share/url?url=${encodeURIComponent(SHARE_URL)}&text=${encodeURIComponent(I18N[lang].shareText)}`, "_blank", "noopener"));
+  mk("whatsapp", "WhatsApp", () =>
+    window.open(`https://wa.me/?text=${encodeURIComponent(I18N[lang].shareText + "\n\n" + SHARE_URL)}`, "_blank", "noopener"));
+  mk("threads", "Threads", () =>
+    window.open(`https://www.threads.net/intent/post?text=${encodeURIComponent(I18N[lang].shareText + "\n\n" + SHARE_URL)}`, "_blank", "noopener"));
+}
+
+/* ============ язык ============ */
+function setLang(l) {
+  lang = l;
+  document.documentElement.lang = lang;
+  document.title = I18N[lang].title;
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const t = I18N[lang][el.dataset.i18n];
+    if (t !== undefined) el.textContent = t;
+  });
+  document.querySelectorAll("#langSwitch button").forEach(b =>
+    b.classList.toggle("active", b.dataset.lang === lang));
+  try { localStorage.setItem("lang", lang); } catch (e) {}
+}
+document.querySelectorAll("#langSwitch button").forEach(b =>
+  b.addEventListener("click", () => setLang(b.dataset.lang)));
+
+let savedLang = null;
+try { savedLang = localStorage.getItem("lang"); } catch (e) {}
+const browserSr = (navigator.languages || [navigator.language || ""]).some(l => /^(sr|hr|bs)/i.test(l));
+
+renderContacts();
+renderShare();
+setLang(savedLang || (browserSr ? "sr" : "ru"));
+</script>
+</body>
+</html>
