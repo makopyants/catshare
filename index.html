@@ -132,11 +132,14 @@
     text-shadow: 0 1px 0 rgba(255, 244, 214, .5);
   }
 
-  /* ============ Карусель — рама из настоящего дерева ============ */
+  /* ============ Карусель — портретная рама из настоящего дерева ============
+     Фото вертикальные, поэтому и рама 3:4: по высоте — до 74dvh,
+     на узких экранах упирается в ширину листа. */
   .carousel {
     position: relative;
-    height: min(62dvh, 640px);
-    min-height: 300px;
+    width: min(100%, calc(min(74vh, 780px) * 0.75));
+    aspect-ratio: 3 / 4;
+    margin: 0 auto;
     padding: 12px;
     border: 1px solid #150b06;
     border-radius: 8px;
@@ -147,8 +150,8 @@
     background-size: auto, 800px auto;
     box-shadow: 0 10px 34px rgba(0, 0, 0, .45), inset 0 0 14px rgba(0, 0, 0, .55);
   }
-  @supports not (height: 1dvh) {
-    .carousel { height: min(62vh, 640px); }
+  @supports (height: 1dvh) {
+    .carousel { width: min(100%, calc(min(74dvh, 780px) * 0.75)); }
   }
   .track {
     display: flex;
@@ -164,6 +167,8 @@
   .slide {
     flex: 0 0 100%;
     height: 100%;
+    position: relative;
+    overflow: hidden;
     scroll-snap-align: center;
     scroll-snap-stop: always;
     display: flex;
@@ -171,7 +176,17 @@
     justify-content: center;
     cursor: pointer;
   }
-  .slide img, .slide video {
+  /* размытая подложка из того же кадра — вместо чёрных полей */
+  .slide img.bg {
+    position: absolute;
+    inset: -8%;
+    width: 116%; height: 116%;
+    object-fit: cover;
+    filter: blur(18px) brightness(.55) saturate(1.1);
+  }
+  .slide img.main, .slide video {
+    position: relative;
+    z-index: 1;
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
@@ -527,8 +542,15 @@ async function loadCarousel() {
       });
       slide.appendChild(v);
     } else {
+      const bg = document.createElement("img");
+      bg.src = item.src;
+      bg.className = "bg";
+      bg.loading = i < 2 ? "eager" : "lazy";
+      bg.setAttribute("aria-hidden", "true");
+      slide.appendChild(bg);
       const img = document.createElement("img");
       img.src = item.src;
+      img.className = "main";
       img.loading = i < 2 ? "eager" : "lazy";
       img.alt = "Котёнок";
       slide.appendChild(img);
