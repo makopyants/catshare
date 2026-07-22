@@ -45,43 +45,46 @@
     font-weight: normal;
   }
 
-  /* Пергаментный лист */
+  /* Пергаментный лист — настоящая текстура с постера */
   .wrap {
     max-width: 1080px;
     margin: 20px auto 44px;
     padding: 10px 18px 34px;
     position: relative;
     background:
-      var(--noise),
-      radial-gradient(120% 100% at 50% 0%, #f2e2c0 0%, #e6d0a6 62%, #d2b586 100%);
+      radial-gradient(120% 100% at 50% 0%, rgba(255, 246, 220, .30) 0%, rgba(148, 102, 44, 0) 45%, rgba(96, 62, 22, .30) 100%),
+      url("parchment.jpg") #e6d0a6;
+    background-size: auto, 300px auto;
     border-radius: 20px 14px 22px 12px;
     box-shadow:
-      inset 0 0 90px rgba(96, 62, 22, .38),
+      inset 0 0 90px rgba(96, 62, 22, .35),
       inset 0 0 6px rgba(96, 62, 22, .3),
       0 16px 50px rgba(0, 0, 0, .55);
   }
   @media (max-width: 700px) { .wrap { margin: 10px 8px 30px; } }
 
-  /* Гвозди по углам листа */
+  /* Кованые гвозди по углам листа — вырезаны с постера */
   .nail {
     position: absolute;
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #7d6b58, #43332a 55%, #241a13 90%);
-    box-shadow: 0 3px 5px rgba(0, 0, 0, .45), inset 0 -1px 2px rgba(0, 0, 0, .5);
+    width: 46px; height: 46px;
+    background: url("nail.jpg") center / cover no-repeat;
+    mix-blend-mode: multiply;
   }
-  .nail.n1 { top: 12px; left: 14px; }
-  .nail.n2 { top: 12px; right: 14px; }
-  .nail.n3 { bottom: 12px; left: 20px; }
-  .nail.n4 { bottom: 12px; right: 20px; }
+  .nail.n1 { top: 8px; left: 10px; }
+  .nail.n2 { top: 8px; right: 10px; transform: scaleX(-1); }
+  .nail.n3 { bottom: 8px; left: 16px; transform: rotate(9deg); }
+  .nail.n4 { bottom: 8px; right: 16px; transform: scaleX(-1) rotate(7deg); }
 
   /* Переключатель языка */
   .lang-switch {
     position: absolute;
-    top: 16px; right: 44px;
+    top: 16px; right: 60px;
     z-index: 10;
     display: flex; gap: 4px;
-    background: rgba(59, 38, 23, .88);
+    background:
+      linear-gradient(rgba(20, 10, 5, .40), rgba(20, 10, 5, .40)),
+      url("wood.jpg") #3a2412;
+    background-size: auto, 300px auto;
     border-radius: 999px;
     padding: 3px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, .35);
@@ -96,7 +99,8 @@
     cursor: pointer;
   }
   .lang-switch button.active {
-    background: var(--parch);
+    background: url("parchment.jpg") var(--parch);
+    background-size: 300px auto;
     color: var(--ink);
   }
 
@@ -119,17 +123,20 @@
     text-shadow: 0 1px 0 rgba(255, 244, 214, .5);
   }
 
-  /* ============ Карусель — как гравюра в дубовой раме ============ */
+  /* ============ Карусель — рама из настоящего дерева ============ */
   .carousel {
     position: relative;
     height: min(62dvh, 640px);
     min-height: 300px;
-    border: 10px solid #221409;
-    outline: 2px solid rgba(0, 0, 0, .4);
+    padding: 12px;
+    border: 1px solid #150b06;
     border-radius: 8px;
     overflow: hidden;
-    background: #171310;
-    box-shadow: 0 10px 34px rgba(0, 0, 0, .45), inset 0 0 18px rgba(0, 0, 0, .6);
+    background:
+      linear-gradient(rgba(15, 8, 4, .30), rgba(15, 8, 4, .30)),
+      url("wood.jpg") #2a1b10;
+    background-size: auto, 800px auto;
+    box-shadow: 0 10px 34px rgba(0, 0, 0, .45), inset 0 0 14px rgba(0, 0, 0, .55);
   }
   @supports not (height: 1dvh) {
     .carousel { height: min(62vh, 640px); }
@@ -137,6 +144,8 @@
   .track {
     display: flex;
     height: 100%;
+    background: #171310;
+    border-radius: 3px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
@@ -174,10 +183,10 @@
     transition: background .15s ease;
   }
   .carousel .nav:hover { background: var(--parch); }
-  .carousel .prev { left: 10px; }
-  .carousel .next { right: 10px; }
+  .carousel .prev { left: 20px; }
+  .carousel .next { right: 20px; }
   .counter {
-    position: absolute; top: 12px; right: 14px;
+    position: absolute; top: 22px; right: 24px;
     z-index: 5;
     background: rgba(34, 20, 9, .78);
     color: var(--parch);
@@ -187,14 +196,14 @@
   }
   /* Полоска прогресса автолистания */
   .progress {
-    position: absolute; left: 0; bottom: 0;
+    position: absolute; left: 12px; bottom: 12px;
     z-index: 5;
     height: 4px; width: 0%;
     background: var(--blood);
     transition: none;
   }
   .progress.running {
-    width: 100%;
+    width: calc(100% - 24px);
     transition: width linear;
   }
   .empty-note {
@@ -262,18 +271,26 @@
   }
   .contact-buttons a {
     display: inline-flex; align-items: center; gap: 8px;
-    padding: 11px 24px;
+    padding: 12px 24px;
     border-radius: 8px;
     text-decoration: none;
     font-size: 1.12rem;
     letter-spacing: .02em;
-    color: #f0dfbc;
-    background: linear-gradient(180deg, #5a3317, #3a1f0d);
-    border: 1px solid #2a1708;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 220, 160, .18);
+    color: #f2e3c2;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .65);
+    background:
+      linear-gradient(rgba(20, 10, 5, .40), rgba(20, 10, 5, .32)),
+      url("wood.jpg") #3a2412;
+    background-size: auto, 420px auto;
+    border: 1px solid #1d100a;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .4), inset 0 1px 0 rgba(255, 220, 160, .14);
     transition: transform .15s ease, filter .15s ease;
   }
-  .contact-buttons a:hover { transform: translateY(-2px); filter: brightness(1.12); }
+  /* у каждой кнопки свой кусок доски */
+  .contact-buttons a:nth-child(2) { background-position: 0 0, -160px -40px; }
+  .contact-buttons a:nth-child(3) { background-position: 0 0, -320px -80px; }
+  .contact-buttons a:nth-child(4) { background-position: 0 0, -90px -120px; }
+  .contact-buttons a:hover { transform: translateY(-2px); filter: brightness(1.15); }
 </style>
 </head>
 <body>
