@@ -1,14 +1,20 @@
 # Тексты для шеринга
 
-Ссылка везде одна: **https://makopyants.github.io/catshare/**
+Базовая ссылка: **https://makopyants.github.io/catshare/**
+
+Для новых публикаций используй UTM-варианты ниже: так Umami покажет, откуда
+пришли посетители. Напечатанный QR остаётся без меток.
 
 ---
 
 ## Instagram
 
 **Пост-карусель** (порядок слайдов): `ig_cover_4x5.jpg` → фото `photos/01…08` → `ig_qr_slide_4x5.jpg`.
-**Сторис**: `ig_story_1080x1920.jpg` + линк-стикер на сайт (текст стикера: «фото и видео»).
-Не забудь положить ссылку в био профиля.
+**Сторис**: `ig_story_1080x1920.jpg` + линк-стикер на сайт (текст стикера: «фото и видео»):
+`https://makopyants.github.io/catshare/?utm_source=instagram&utm_medium=organic_social&utm_campaign=catshare_2026&utm_content=story`.
+
+Ссылка для био профиля:
+`https://makopyants.github.io/catshare/?utm_source=instagram&utm_medium=organic_social&utm_campaign=catshare_2026&utm_content=profile`.
 
 Каптион:
 
@@ -50,7 +56,7 @@
 
 Скоро вакцинация, после неё готовы к переезду. Можно по одному, можно компанией. Белград, привезём и в другие города.
 
-Фото и видео: https://makopyants.github.io/catshare/
+Фото и видео: https://makopyants.github.io/catshare/?utm_source=telegram&utm_medium=organic_social&utm_campaign=catshare_2026&utm_content=ru_group
 Миша: @devthanatos · +381 62 192 8923 (тел/WhatsApp/Viber)
 
 Репост очень приветствуется 🙏
@@ -65,7 +71,7 @@ Našli smo ih ispod žbuna u selu, sasvim male. Sada imaju oko 7 nedelja — zdr
 
 Uskoro ide vakcinacija, posle nje su spremne za novi dom. Može pojedinačno, a može i zajedno. Beograd — možemo ih dovesti i u druge gradove.
 
-Slike i snimci: https://makopyants.github.io/catshare/
+Slike i snimci: https://makopyants.github.io/catshare/?utm_source=telegram&utm_medium=organic_social&utm_campaign=catshare_2026&utm_content=sr_group
 Miša: Telegram @devthanatos · +381 62 192 8923 (WhatsApp/Viber)
 
 Deljenje mnogo znači 🙏
@@ -82,7 +88,7 @@ Deljenje mnogo znači 🙏
 ```
 Tri mačeta iz jednog legla traže dom 🐾 Beograd, ~7 nedelja, mazne i naviknute na toalet. Nađene ispod žbuna u selu — sada traže svoje ljude.
 
-Sve slike: https://makopyants.github.io/catshare/
+Sve slike: https://makopyants.github.io/catshare/?utm_source=threads&utm_medium=organic_social&utm_campaign=catshare_2026&utm_content=sr_post
 DM ili Telegram @devthanatos
 ```
 
@@ -105,6 +111,6 @@ Mali mangup — ispod žbuna se drao najglasnije, štiti sestre 😎
 ```
 Three tiny kittens rescued from under a bush in a Serbian village are looking for homes 🐾 Belgrade, ~7 weeks old, litter-trained, extremely cuddly.
 
-Photos: https://makopyants.github.io/catshare/
+Photos: https://makopyants.github.io/catshare/?utm_source=threads&utm_medium=organic_social&utm_campaign=catshare_2026&utm_content=en_post
 DM me or Telegram @devthanatos
 ```
